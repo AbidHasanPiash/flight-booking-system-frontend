@@ -33,7 +33,7 @@ export default function Login() {
         validationSchema,
         onSubmit,
         onSuccess,
-      });
+    });
 
     return (
         <div className="min-h-screen flex flex-col justify-center items-center bg-gray-50 px-4">
@@ -41,7 +41,7 @@ export default function Login() {
                 <h2 className="text-2xl font-bold text-gray-800 text-center mb-6">Login</h2>
                 <p className="text-sm text-gray-500 mt-1 mb-4 text-center">Please enter your credentials to access your account</p>
                 <form onSubmit={formik.handleSubmit} className="flex flex-col space-y-4" >
-                    {/* Email Input */}
+
                     <InputWrapper label="Email" error={formik.errors?.email} touched={formik.touched?.email}>
                         <input
                             name="email"
@@ -54,7 +54,6 @@ export default function Login() {
                         />
                     </InputWrapper>
 
-                    {/* Password Input */}
                     <InputWrapper label="Password" error={formik.errors?.password} touched={formik.touched?.password}>
                         <input
                             name="password"
@@ -67,7 +66,6 @@ export default function Login() {
                         />
                     </InputWrapper>
 
-                    {/* Submit Button */}
                     <div className="text-center">
                         <Submit
                             disabled={mutation.isPending || mutation.isSuccess}
@@ -77,7 +75,9 @@ export default function Login() {
                         />
                     </div>
                 </form>
-                <div className="my-8 w-full h-px bg-gray-300"/>
+
+                <div className="m-8 mx-auto w-full h-px bg-gray-200" />
+
                 <div className="mt-8 flex space-x-2">
                     <p className="text-sm text-gray-500">Don't have account ?</p>
                     <Link to={'/register'} className="text-sm hover:text-blue-500 hover:underline">Register</Link>

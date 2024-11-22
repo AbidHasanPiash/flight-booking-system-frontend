@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import appConfig from "../configs/appConfig";
 
 export default function Home() {
   return (
@@ -8,7 +9,7 @@ export default function Home() {
       <section className="h-screen flex flex-col p-2 md:p-4">
         {/* Hero Section */}
         <header className="w-full flex justify-between items-center">
-          <h1 className="text-lg md:text-xl xl:text-3xl font-bold">Skyline Flights</h1>
+          <h1 className="text-lg md:text-xl xl:text-2xl font-bold">{appConfig.Name}</h1>
           <nav>
             <ul className="flex text-sm md:text-base gap-4">
               <li>
@@ -27,12 +28,12 @@ export default function Home() {
 
         <main className="flex flex-grow flex-col items-center justify-center px-4 text-center">
           
-          <div className="grid gap-10">
+          <div className="grid gap-10 w-full h-full">
             
-            <div className="flex flex-col items-start justify-center mx-auto">
+            <div className="flex flex-col items-end justify-end mx-auto">
               
               <div className="max-w-2xl">
-                <h2 className="text-2xl md:text-3xl xl:text-5xl font-extrabold mb-6">Your Gateway to the World</h2>
+                <h2 className="text-3xl md:text-4xl xl:text-5xl font-extrabold mb-6">Your Gateway to the World</h2>
                 <p className="text-sm md:text-base xl:text-lg mb-8">
                   Find the best deals on flights and book your journey with ease. Adventure awaits at your fingertips.
                 </p>
@@ -58,7 +59,7 @@ export default function Home() {
               <img
                 src="/images/homepage-plan-image.png"
                 alt="Airplane flying into the sunset"
-                className="w-full h-full object-cover"
+                className="w-full h-full object-contain"
               />
             </div>
           </div>

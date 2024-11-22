@@ -1,13 +1,12 @@
 import React from "react";
 import Submit from "../components/buttons/Submit";
 import Spinner from "../components/common/Spinner";
-import * as Yup from "yup";
-import { useFormik } from "formik";
-import { useMutation } from "@tanstack/react-query";
-import { RiSendPlaneLine } from "react-icons/ri";
 import InputWrapper from "../components/common/InputWrapper";
+import * as Yup from "yup";
+import { RiSendPlaneLine } from "react-icons/ri";
 import { toast } from "sonner";
 import { Link } from "react-router-dom";
+import { useFormWithMutation } from "../utils/useFormWithMutation";
 
 export default function Login() {
 
@@ -29,17 +28,12 @@ export default function Login() {
         formik.resetForm();
     };
 
-    const formik = useFormik({
+    const { formik, mutation } = useFormWithMutation({
         initialValues,
         validationSchema,
-        onSubmit: (values) => mutation.mutate(values),
-    });
-
-    const mutation = useMutation({
-        mutationKey: ["login"],
-        mutationFn: onSubmit,
+        onSubmit,
         onSuccess,
-    });
+      });
 
     return (
         <div className="min-h-screen flex flex-col justify-center items-center bg-gray-50 px-4">

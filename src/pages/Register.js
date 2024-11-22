@@ -120,9 +120,16 @@ export default function Register() {
 
                 <div className="m-8 mx-auto w-full h-px bg-gray-200" />
 
-                <div className="mt-8 flex space-x-2">
-                    <p className="text-sm text-gray-500">Already have account ?</p>
-                    <Link to={'/login'} className="text-sm hover:text-blue-500 hover:underline">Login</Link>
+                <div className="mt-8 space-y-2">
+                    <div className="flex space-x-2">
+                        <p className="text-sm text-gray-500">Already have account ?</p>
+                        <Link to={'/login'} className="text-sm hover:text-blue-500 hover:underline">Login</Link>
+                    </div>
+
+                    <div className="flex space-x-2">
+                        <p className="text-sm text-gray-500">Back to home ?</p>
+                        <Link to={'/'} className="text-sm hover:text-blue-500 hover:underline">Home</Link>
+                    </div>
                 </div>
             </div>
         </div>

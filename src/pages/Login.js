@@ -7,6 +7,7 @@ import { useMutation } from "@tanstack/react-query";
 import { RiSendPlaneLine } from "react-icons/ri";
 import InputWrapper from "../components/common/InputWrapper";
 import { toast } from "sonner";
+import { Link } from "react-router-dom";
 
 export default function Login() {
 
@@ -44,7 +45,7 @@ export default function Login() {
         <div className="min-h-screen flex flex-col justify-center items-center bg-gray-50 px-4">
             <div className="bg-white shadow-lg rounded-lg p-8 w-full max-w-md">
                 <h2 className="text-2xl font-bold text-gray-800 text-center mb-6">Login</h2>
-                <p>Provide your cridantials to book a flight</p>
+                <p className="text-sm text-gray-500 mt-1 mb-4 text-center">Please enter your credentials to access your account</p>
                 <form onSubmit={formik.handleSubmit} className="flex flex-col space-y-4" >
                     {/* Email Input */}
                     <InputWrapper label="Email" error={formik.errors?.email} touched={formik.touched?.email}>
@@ -82,6 +83,11 @@ export default function Login() {
                         />
                     </div>
                 </form>
+                <div className="my-8 w-full h-px bg-gray-300"/>
+                <div className="mt-8 flex space-x-2">
+                    <p className="text-sm text-gray-500">Don't have account ?</p>
+                    <Link to={'/register'} className="text-sm hover:text-blue-500 hover:underline">Register</Link>
+                </div>
             </div>
         </div>
     );

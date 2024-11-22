@@ -8,24 +8,6 @@ export default function Home() {
 
       <section className="h-screen flex flex-col p-2 md:p-4">
         {/* Hero Section */}
-        <header className="w-full flex justify-between items-center">
-          <h1 className="text-lg md:text-xl xl:text-2xl font-bold">{appConfig.Name}</h1>
-          <nav>
-            <ul className="flex text-sm md:text-base gap-4">
-              <li>
-                <Link to="/login" className="hover:underline">
-                  Login
-                </Link>
-              </li>
-              <li>
-                <Link to="/register" className="hover:underline">
-                  Register
-                </Link>
-              </li>
-            </ul>
-          </nav>
-        </header>
-
         <main className="flex flex-grow flex-col items-center justify-center px-4 text-center">
           
           <div className="grid gap-10 w-full h-full">

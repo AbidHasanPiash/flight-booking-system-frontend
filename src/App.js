@@ -10,20 +10,23 @@ import UserProfile from "./pages/UserProfile";
 import AdminDashboard from "./pages/AdminDashboard";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
+import UserLayout from './components/layout/UserLayout';
 
 function App() {
   return (
     <Router>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/flights" element={<SearchResults />} />
-        <Route path="/flight/:id" element={<FlightDetails />} />
-        <Route path="/booking" element={<Booking />} />
-        <Route path="/profile" element={<UserProfile />} />
-        <Route path="/admin" element={<AdminDashboard />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
-      </Routes>
+      <UserLayout>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/flights" element={<SearchResults />} />
+          <Route path="/flight/:id" element={<FlightDetails />} />
+          <Route path="/booking" element={<Booking />} />
+          <Route path="/profile" element={<UserProfile />} />
+          <Route path="/admin" element={<AdminDashboard />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+        </Routes>
+      </UserLayout>
     </Router>
   );
 }

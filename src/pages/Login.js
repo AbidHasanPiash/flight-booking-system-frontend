@@ -6,25 +6,22 @@ import { useFormik } from "formik";
 import { useMutation } from "@tanstack/react-query";
 import { RiSendPlaneLine } from "react-icons/ri";
 import InputWrapper from "../components/common/InputWrapper";
+import { toast } from "sonner";
 
 export default function Login() {
-    // Yup validation schema
+
     const validationSchema = Yup.object({
-        email: Yup.string()
-            .email("Invalid email address")
-            .required("Email is required"),
-        password: Yup.string()
-            .min(6, "Password must be at least 6 characters")
-            .required("Password is required"),
+        email: Yup.string().email("Invalid email address").required("Email is required"),
+        password: Yup.string().min(6, "Password must be at least 6 characters").required("Password is required"),
     });
 
     const initialValues = {
-        email: "montasimmamun@gmail.com",
-        password: "Qweqwe@12345",
+        email: "abid@mail.com",
+        password: "Password@1234",
     };
 
-    const submit = async (data) => {
-        console.log(data);
+    const onSubmit = async (data) => {
+        toast.success(JSON.stringify(data));
     };
 
     const onSuccess = () => {
@@ -39,7 +36,7 @@ export default function Login() {
 
     const mutation = useMutation({
         mutationKey: ["login"],
-        mutationFn: submit,
+        mutationFn: onSubmit,
         onSuccess,
     });
 
@@ -47,6 +44,7 @@ export default function Login() {
         <div className="min-h-screen flex flex-col justify-center items-center bg-gray-50 px-4">
             <div className="bg-white shadow-lg rounded-lg p-8 w-full max-w-md">
                 <h2 className="text-2xl font-bold text-gray-800 text-center mb-6">Login</h2>
+                <p>Provide your cridantials to book a flight</p>
                 <form onSubmit={formik.handleSubmit} className="flex flex-col space-y-4" >
                     {/* Email Input */}
                     <InputWrapper label="Email" error={formik.errors?.email} touched={formik.touched?.email}>

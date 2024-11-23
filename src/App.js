@@ -12,6 +12,7 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import UserLayout from './components/layout/UserLayout';
 import PrivateRoute from './HOC/PrivateRoute';
+import EditProfile from './pages/EditProfile';
 
 function App() {
     return (
@@ -30,6 +31,15 @@ function App() {
                         element={
                             <PrivateRoute>
                                 <UserProfile />
+                            </PrivateRoute>
+                        }
+                    />
+                    {/* Nested route for profile editing */}
+                    <Route
+                        path="/profile/edit"
+                        element={
+                            <PrivateRoute>
+                                <EditProfile />
                             </PrivateRoute>
                         }
                     />

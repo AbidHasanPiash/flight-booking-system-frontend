@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { FaPlaneDeparture } from "react-icons/fa";
 import { useAuth } from "../context/AuthContext";
 
@@ -50,7 +50,10 @@ export default function UserProfile() {
         <div className="min-h-screen bg-gray-50 py-12">
             <div className="max-w-4xl mx-auto bg-white shadow-lg rounded-lg p-6">
                 <div className="flex justify-between items-center mb-6">
-                    <h1 className="text-2xl font-bold text-gray-800">User Profile</h1>
+                    <div>
+                        <h1 className="text-2xl font-bold text-gray-800">User Profile</h1>
+                        <Link to={'edit'}>Edit</Link>
+                    </div>
                     <button
                         onClick={handleLogout}
                         className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 focus:ring-2 focus:ring-red-400 transition"

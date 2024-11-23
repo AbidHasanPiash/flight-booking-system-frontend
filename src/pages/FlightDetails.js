@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { FaPlaneDeparture, FaPlaneArrival, FaClock, FaDollarSign, FaChair } from "react-icons/fa";
 import { MdFlightTakeoff } from "react-icons/md";
+import { useNavigate } from "react-router-dom";
 
 const mockFlightData = {
     id: 4,
@@ -24,6 +25,7 @@ export default function FlightDetails() {
 
     // State to track selected seats
     const [selectedSeats, setSelectedSeats] = useState([]);
+    const navigate = useNavigate();
 
     // Toggle seat selection
     const toggleSeatSelection = (seatId) => {
@@ -32,6 +34,10 @@ export default function FlightDetails() {
         } else {
             setSelectedSeats([...selectedSeats, seatId]); // Select
         }
+    };
+
+    const handleBookNow = () => {
+        navigate("/booking", { state: { flight, selectedSeats } });
     };
 
     return (
@@ -167,6 +173,7 @@ export default function FlightDetails() {
                     {/* Call to Action */}
                     <div className="mt-6 flex justify-end">
                         <button
+                            onClick={handleBookNow}
                             className={`px-6 py-2 ${selectedSeats.length > 0 ? "bg-blue-600 hover:bg-blue-700" : "bg-gray-400 cursor-not-allowed"
                                 } text-white rounded-lg focus:ring-2 focus:ring-blue-400 transition`}
                             disabled={selectedSeats.length === 0}

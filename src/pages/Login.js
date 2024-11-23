@@ -5,10 +5,13 @@ import InputWrapper from "../components/common/InputWrapper";
 import * as Yup from "yup";
 import { RiSendPlaneLine } from "react-icons/ri";
 import { toast } from "sonner";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useFormWithMutation } from "../utils/useFormWithMutation";
+import { useAuth } from "../context/AuthContext";
 
 export default function Login() {
+    const { login } = useAuth();
+    const navigate = useNavigate();
 
     const validationSchema = Yup.object({
         email: Yup.string()
@@ -30,6 +33,17 @@ export default function Login() {
 
     const onSubmit = async (data) => {
         toast.success(JSON.stringify(data));
+        const userData = {
+            email: "email.mail.com",
+            role: "user", // "user" or "admin"
+            name: "John Doe", // Mock name
+        };
+        login(userData);
+        if (userData.role === 'admin') {
+            navigate("/admin");
+        } else {
+            navigate("/profile");
+        }
     };
 
     const onSuccess = () => {

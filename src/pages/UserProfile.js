@@ -1,9 +1,7 @@
 import React, { useState } from "react";
-
-const mockUserData = {
-    name: "John Doe",
-    email: "johndoe@example.com",
-};
+import { useNavigate } from "react-router-dom";
+import { FaPlaneDeparture } from "react-icons/fa";
+import { useAuth } from "../context/AuthContext";
 
 const mockPurchaseHistory = [
     {
@@ -24,17 +22,17 @@ const mockPurchaseHistory = [
     },
 ];
 
-const mockCurrentBooking = {
-    flight: "Flight 202",
-    origin: "Paris",
-    destination: "Dubai",
-    date: "2024-12-15",
-    price: 500.00,
-    seats: ["A3", "B4"],
-};
-
 export default function UserProfile() {
-    const [currentBooking, setCurrentBooking] = useState(mockCurrentBooking);
+    const { user, logout } = useAuth();
+    const navigate = useNavigate();
+    const [currentBooking, setCurrentBooking] = useState({
+        flight: "Flight 202",
+        origin: "Paris",
+        destination: "Dubai",
+        date: "2024-12-15",
+        price: 500.00,
+        seats: ["A3", "B4"],
+    });
 
     const handleCancelBooking = () => {
         if (window.confirm("Are you sure you want to cancel your booking?")) {
@@ -43,16 +41,30 @@ export default function UserProfile() {
         }
     };
 
+    const handleLogout = () => {
+        logout();
+        navigate("/login");
+    };
+
     return (
         <div className="min-h-screen bg-gray-50 py-12">
             <div className="max-w-4xl mx-auto bg-white shadow-lg rounded-lg p-6">
-                <h1 className="text-2xl font-bold text-gray-800 mb-6">User Profile</h1>
+                <div className="flex justify-between items-center mb-6">
+                    <h1 className="text-2xl font-bold text-gray-800">User Profile</h1>
+                    <button
+                        onClick={handleLogout}
+                        className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 focus:ring-2 focus:ring-red-400 transition"
+                    >
+                        Logout
+                    </button>
+                </div>
 
                 {/* User Information */}
                 <div className="mb-8">
                     <h2 className="text-xl font-semibold text-gray-700">Personal Information</h2>
-                    <p className="text-gray-600">Name: {mockUserData.name}</p>
-                    <p className="text-gray-600">Email: {mockUserData.email}</p>
+                    <p className="text-gray-600">Name: {user.name}</p>
+                    <p className="text-gray-600">Email: {user.email}</p>
+                    <p className="text-gray-600">Role: {user.role}</p>
                 </div>
 
                 {/* Current Booking */}
@@ -60,20 +72,25 @@ export default function UserProfile() {
                     <div className="mb-8">
                         <h2 className="text-xl font-semibold text-gray-700">Current Booking</h2>
                         <div className="bg-blue-50 p-4 rounded-lg border border-blue-200">
-                            <p className="text-gray-700 font-medium">
-                                Flight: {currentBooking.flight}
+                            <div className="flex items-center gap-4 mb-4">
+                                <FaPlaneDeparture className="text-blue-600 text-2xl" />
+                                <div>
+                                    <p className="text-gray-700 font-medium">
+                                        {currentBooking.flight}
+                                    </p>
+                                    <p className="text-gray-600">
+                                        {currentBooking.origin} → {currentBooking.destination}
+                                    </p>
+                                </div>
+                            </div>
+                            <p className="text-gray-600">
+                                <strong>Date:</strong> {new Date(currentBooking.date).toLocaleDateString()}
                             </p>
                             <p className="text-gray-600">
-                                Route: {currentBooking.origin} → {currentBooking.destination}
+                                <strong>Price:</strong> ${currentBooking.price.toFixed(2)}
                             </p>
                             <p className="text-gray-600">
-                                Date: {new Date(currentBooking.date).toLocaleDateString()}
-                            </p>
-                            <p className="text-gray-600">
-                                Price: ${currentBooking.price.toFixed(2)}
-                            </p>
-                            <p className="text-gray-600">
-                                Seats: {currentBooking.seats.join(", ")}
+                                <strong>Seats:</strong> {currentBooking.seats.join(", ")}
                             </p>
                             <button
                                 onClick={handleCancelBooking}

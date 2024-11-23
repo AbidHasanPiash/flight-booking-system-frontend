@@ -1,4 +1,6 @@
 import React from "react";
+import { FaPlaneDeparture, FaPlaneArrival, FaClock, FaDollarSign, FaChair } from "react-icons/fa";
+import { MdFlightTakeoff } from "react-icons/md";
 
 const mockFlightData = {
     id: 4,
@@ -22,7 +24,10 @@ export default function FlightDetails() {
                 style={{ backgroundImage: "url('/images/emirates.avif')" }}
             >
                 <div className="flex items-center justify-center h-full bg-black bg-opacity-50">
-                    <h1 className="text-4xl text-white font-bold">{flight.airline}</h1>
+                    <h1 className="text-4xl text-white font-bold flex items-center gap-2">
+                        <MdFlightTakeoff className="text-yellow-400" />
+                        {flight.airline}
+                    </h1>
                 </div>
             </div>
 
@@ -31,52 +36,63 @@ export default function FlightDetails() {
                 <div className="max-w-7xl mx-auto p-6 bg-white shadow-lg rounded-lg -mt-20 relative z-10">
                     <h1 className="text-2xl font-bold text-gray-800 mb-6">Flight Information</h1>
 
-                    {/* Airline Info */}
-                    <div className="mb-4">
-                        <h2 className="text-xl font-semibold text-blue-600">{flight.airline}</h2>
-                        <p className="text-gray-600">Flight ID: {flight.id}</p>
-                    </div>
-
                     {/* Flight Details */}
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                        {/* Origin and Destination */}
-                        <div>
-                            <h3 className="text-lg font-medium text-gray-700 mb-2">Route</h3>
-                            <p className="text-gray-600">
-                                <strong>From:</strong> {flight.origin}
-                            </p>
-                            <p className="text-gray-600">
-                                <strong>To:</strong> {flight.destination}
-                            </p>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                        {/* Origin */}
+                        <div className="flex items-center gap-4">
+                            <FaPlaneDeparture className="text-blue-600 text-2xl" />
+                            <div>
+                                <h3 className="text-lg font-medium text-gray-700">From</h3>
+                                <p className="text-gray-600">{flight.origin}</p>
+                            </div>
                         </div>
 
-                        {/* Departure Date */}
-                        <div>
-                            <h3 className="text-lg font-medium text-gray-700 mb-2">Departure</h3>
-                            <p className="text-gray-600">
-                                <strong>Date:</strong> {new Date(flight.departureDate).toLocaleDateString()}
-                            </p>
-                            <p className="text-gray-600">
-                                <strong>Time:</strong> {new Date(flight.departureDate).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}
-                            </p>
+                        {/* Destination */}
+                        <div className="flex items-center gap-4">
+                            <FaPlaneArrival className="text-blue-600 text-2xl" />
+                            <div>
+                                <h3 className="text-lg font-medium text-gray-700">To</h3>
+                                <p className="text-gray-600">{flight.destination}</p>
+                            </div>
+                        </div>
+
+                        {/* Departure */}
+                        <div className="flex items-center gap-4">
+                            <FaClock className="text-blue-600 text-2xl" />
+                            <div>
+                                <h3 className="text-lg font-medium text-gray-700">Departure</h3>
+                                <p className="text-gray-600">
+                                    {new Date(flight.departureDate).toLocaleDateString()} -{" "}
+                                    {new Date(flight.departureDate).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}
+                                </p>
+                            </div>
                         </div>
 
                         {/* Duration */}
-                        <div>
-                            <h3 className="text-lg font-medium text-gray-700 mb-2">Duration</h3>
-                            <p className="text-gray-600">{flight.duration}</p>
+                        <div className="flex items-center gap-4">
+                            <FaClock className="text-blue-600 text-2xl" />
+                            <div>
+                                <h3 className="text-lg font-medium text-gray-700">Duration</h3>
+                                <p className="text-gray-600">{flight.duration}</p>
+                            </div>
                         </div>
 
                         {/* Price */}
-                        <div>
-                            <h3 className="text-lg font-medium text-gray-700 mb-2">Price</h3>
-                            <p className="text-blue-600 text-xl font-bold">${flight.price.toFixed(2)}</p>
+                        <div className="flex items-center gap-4">
+                            <FaDollarSign className="text-blue-600 text-2xl" />
+                            <div>
+                                <h3 className="text-lg font-medium text-gray-700">Price</h3>
+                                <p className="text-blue-600 text-xl font-bold">${flight.price.toFixed(2)}</p>
+                            </div>
                         </div>
 
                         {/* Available Seats */}
-                        <div>
-                            <h3 className="text-lg font-medium text-gray-700 mb-2">Available Seats</h3>
-                            <p className="text-gray-600">{flight.availableSeats} seats remaining</p>
+                        <div className="flex items-center gap-4">
+                            <FaChair className="text-blue-600 text-2xl" />
+                            <div>
+                                <h3 className="text-lg font-medium text-gray-700">Available Seats</h3>
+                                <p className="text-gray-600">{flight.availableSeats} seats remaining</p>
+                            </div>
                         </div>
                     </div>
 

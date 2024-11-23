@@ -6,7 +6,12 @@ import { useAuth } from "../context/AuthContext";
 // - children: The component to render if authorized
 // - requiredRole: (optional) The role required to access the route
 export default function PrivateRoute({ children, requiredRole }) {
-    const { user } = useAuth();
+    const { user, loading } = useAuth();
+
+    if (loading) {
+        // Show a loading spinner or placeholder while auth state is being initialized
+        return <div>Loading...</div>;
+    }
 
     if (!user) {
         // User is not authenticated

@@ -35,7 +35,7 @@ export default function Login() {
         toast.success(JSON.stringify(data));
         const userData = {
             email: "email.mail.com",
-            role: "user", // "user" or "admin"
+            role: "admin", // "user" or "admin"
             name: "John Doe", // Mock name
         };
         login(userData);

@@ -1,17 +1,16 @@
-import React, { createContext, useContext, useState } from "react";
+import React, { createContext, useContext, useEffect, useState } from "react";
 
 // Create Auth Context
 const AuthContext = createContext();
 
 // Auth Provider Component
 export function AuthProvider({ children }) {
-    // Initialize user state
     const [user, setUser] = useState(null); // null indicates no user is logged in
+    const [loading, setLoading] = useState(true); // Indicates if the auth state is being initialized
 
     // Function to log in a user
     const login = (userData) => {
         setUser(userData);
-        // Optionally, store user data in localStorage for persistence
         localStorage.setItem("user", JSON.stringify(userData));
     };
 
@@ -22,15 +21,16 @@ export function AuthProvider({ children }) {
     };
 
     // Load user from localStorage on initial render
-    React.useEffect(() => {
+    useEffect(() => {
         const storedUser = localStorage.getItem("user");
         if (storedUser) {
             setUser(JSON.parse(storedUser));
         }
+        setLoading(false); // Auth state has been initialized
     }, []);
 
     return (
-        <AuthContext.Provider value={{ user, login, logout }}>
+        <AuthContext.Provider value={{ user, login, logout, loading }}>
             {children}
         </AuthContext.Provider>
     );

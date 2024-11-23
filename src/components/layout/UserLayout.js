@@ -13,7 +13,7 @@ const UserLayout = ({ children }) => {
         <div>
             {/* Render navigation only if the current route is not in `noNavRoutes` */}
             {!shouldHideNav && (
-                <nav className="py-4 fixed top-0 left-0 right-0 bg-gray-50 shadow-xl h-16">
+                <nav className="py-4 fixed top-0 left-0 right-0 z-50 bg-gradient-to-l from-blue-500 to-indigo-900 text-white shadow-xl h-16">
                     <div className="container mx-auto flex justify-between items-center">
                         <h1 className="text-lg md:text-xl xl:text-2xl font-bold">
                             <Link to={'/'}>{appConfig.Name}</Link>

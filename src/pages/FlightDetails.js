@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { FaPlaneDeparture, FaPlaneArrival, FaClock, FaDollarSign, FaChair } from "react-icons/fa";
 import { MdFlightTakeoff } from "react-icons/md";
 
@@ -13,8 +13,26 @@ const mockFlightData = {
     duration: "4h 15m",
 };
 
+// Mock seat availability
+const mockSeats = Array(30).fill(false).map((_, i) => ({
+    id: i + 1,
+    available: Math.random() > 0.2, // Randomly mark some seats as unavailable (80% availability)
+}));
+
 export default function FlightDetails() {
     const flight = mockFlightData;
+
+    // State to track selected seats
+    const [selectedSeats, setSelectedSeats] = useState([]);
+
+    // Toggle seat selection
+    const toggleSeatSelection = (seatId) => {
+        if (selectedSeats.includes(seatId)) {
+            setSelectedSeats(selectedSeats.filter((id) => id !== seatId)); // Deselect
+        } else {
+            setSelectedSeats([...selectedSeats, seatId]); // Select
+        }
+    };
 
     return (
         <div>
@@ -96,9 +114,63 @@ export default function FlightDetails() {
                         </div>
                     </div>
 
+                    {/* Seat Selection */}
+                    <div className="mt-10">
+                        <h2 className="text-xl font-bold text-gray-800 mb-4">Select Your Seat</h2>
+                        <div className="inline-flex flex-col gap-4 bg-gray-100 p-6 rounded-lg">
+                            {Array.from({ length: 6 }, (_, rowIndex) => (
+                                <div key={rowIndex} className="flex gap-4 items-center">
+                                    {/* Left Seats */}
+                                    {mockSeats.slice(rowIndex * 5, rowIndex * 5 + 2).map((seat) => (
+                                        <button
+                                            key={seat.id}
+                                            className={`w-12 h-12 rounded-md text-white flex items-center justify-center ${seat.available
+                                                    ? selectedSeats.includes(seat.id)
+                                                        ? "bg-green-500 hover:bg-green-600"
+                                                        : "bg-gray-300 hover:bg-gray-400"
+                                                    : "bg-red-500 cursor-not-allowed"
+                                                }`}
+                                            disabled={!seat.available}
+                                            onClick={() => toggleSeatSelection(seat.id)}
+                                        >
+                                            {seat.id}
+                                        </button>
+                                    ))}
+
+                                    {/* Aisle Space */}
+                                    <div className="w-12 h-12"></div>
+
+                                    {/* Right Seats */}
+                                    {mockSeats.slice(rowIndex * 5 + 2, rowIndex * 5 + 5).map((seat) => (
+                                        <button
+                                            key={seat.id}
+                                            className={`w-12 h-12 rounded-md text-white flex items-center justify-center ${seat.available
+                                                    ? selectedSeats.includes(seat.id)
+                                                        ? "bg-green-500 hover:bg-green-600"
+                                                        : "bg-gray-300 hover:bg-gray-400"
+                                                    : "bg-red-500 cursor-not-allowed"
+                                                }`}
+                                            disabled={!seat.available}
+                                            onClick={() => toggleSeatSelection(seat.id)}
+                                        >
+                                            {seat.id}
+                                        </button>
+                                    ))}
+                                </div>
+                            ))}
+                        </div>
+                        <p className="mt-4 text-gray-600">
+                            Selected Seats: {selectedSeats.length > 0 ? selectedSeats.join(", ") : "None"}
+                        </p>
+                    </div>
+
                     {/* Call to Action */}
                     <div className="mt-6 flex justify-end">
-                        <button className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 focus:ring-2 focus:ring-blue-400 transition">
+                        <button
+                            className={`px-6 py-2 ${selectedSeats.length > 0 ? "bg-blue-600 hover:bg-blue-700" : "bg-gray-400 cursor-not-allowed"
+                                } text-white rounded-lg focus:ring-2 focus:ring-blue-400 transition`}
+                            disabled={selectedSeats.length === 0}
+                        >
                             Book Now
                         </button>
                     </div>

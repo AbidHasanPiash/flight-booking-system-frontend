@@ -3,7 +3,7 @@ import Submit from "../components/buttons/Submit";
 import Spinner from "../components/common/Spinner";
 import InputWrapper from "../components/common/InputWrapper";
 import * as Yup from "yup";
-import { RiSearchLine } from "react-icons/ri";
+import { RiSearchLine, RiSortDesc } from "react-icons/ri";
 import { toast } from "sonner";
 import { useFormWithMutation } from "../utils/useFormWithMutation";
 import { useLocation } from "react-router-dom";
@@ -151,6 +151,29 @@ export default function SearchResults() {
                         />
                     </div>
                 </form>
+            </div>
+
+            <div className="max-w-7xl mx-auto">
+                <div className="m-4 flex items-center justify-end">
+                    <div className="px-2 py-1 bg-white flex items-center space-x-4">
+                        <button className="flex items-center space-x-2"> 
+                            <span>price</span> 
+                            <RiSortDesc/>
+                        </button>
+                        <button className="flex items-center space-x-2"> 
+                            <span>duration</span> 
+                            <RiSortDesc/>
+                        </button>
+                        <button className="flex items-center space-x-2"> 
+                            <span>airline</span> 
+                            <RiSortDesc/>
+                        </button>
+                        <button className="flex items-center space-x-2"> 
+                            <span>available seats</span> 
+                            <RiSortDesc/>
+                        </button>
+                    </div>
+                </div>
             </div>
 
             {/* Grid of flights */}

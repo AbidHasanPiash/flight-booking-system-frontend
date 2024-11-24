@@ -1,9 +1,11 @@
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
 import appConfig from "../../configs/appConfig";
+import { useAuth } from "../../context/AuthContext";
 
 const UserLayout = ({ children }) => {
     const location = useLocation();
+    const { user } = useAuth();
 
     // Define routes where the navigation bar should not appear
     const noNavRoutes = ["/login", "/register", "/admin"];
@@ -18,11 +20,14 @@ const UserLayout = ({ children }) => {
                         <h1 className="text-lg md:text-xl xl:text-2xl font-bold">
                             <Link to={'/'}>{appConfig.Name}</Link>
                         </h1>
-                        <div className="space-x-4">
+                        {user ? (
                             <Link to="/profile" className="hover:underline">Profile</Link>
-                            <Link to="/login" className="hover:underline">Login</Link>
-                            <Link to="/register" className="hover:underline">Register</Link>
-                        </div>
+                        ) : (
+                            <div className="space-x-4">
+                                <Link to="/login" className="hover:underline">Login</Link>
+                                <Link to="/register" className="hover:underline">Register</Link>
+                            </div>
+                        )}
                     </div>
                 </nav>
             )}

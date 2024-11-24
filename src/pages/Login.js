@@ -4,10 +4,10 @@ import Spinner from "../components/common/Spinner";
 import InputWrapper from "../components/common/InputWrapper";
 import * as Yup from "yup";
 import { RiSendPlaneLine } from "react-icons/ri";
-import { toast } from "sonner";
 import { Link, useNavigate } from "react-router-dom";
 import { useFormWithMutation } from "../utils/useFormWithMutation";
 import { useAuth } from "../context/AuthContext";
+import user from "../utils/user";
 
 export default function Login() {
     const { login } = useAuth();
@@ -32,16 +32,13 @@ export default function Login() {
     };
 
     const onSubmit = async (data) => {
-        toast.success(JSON.stringify(data));
-        const userData = {
-            email: "email.mail.com",
-            role: "user", // "user" or "admin"
-            name: "John Doe", // Mock name
-        };
-        login(userData);
-        if (userData.role === 'admin') {
+        const res = await user.login(data)
+        console.log(res);
+        
+        login(res);
+        if (res.role === 'admin') {
             navigate("/admin");
-        } else {
+        } else if (res.role === 'user') {
             navigate("/profile");
         }
     };
@@ -90,7 +87,7 @@ export default function Login() {
 
                     <div className="text-center">
                         <Submit
-                            disabled={mutation.isPending || mutation.isSuccess}
+                            disabled={mutation.isPending}
                             label={mutation.isPending ? "Submitting..." : "Login"}
                             icon={mutation.isPending ? <Spinner size="4" /> : <RiSendPlaneLine />}
                             className="w-full"

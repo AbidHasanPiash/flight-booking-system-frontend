@@ -7,6 +7,8 @@ import { RiSendPlaneLine } from "react-icons/ri";
 import { toast } from "sonner";
 import { Link } from "react-router-dom";
 import { useFormWithMutation } from "../utils/useFormWithMutation";
+import { postData } from "../utils/axios";
+import apiConfig from "../configs/apiConfig";
 
 export default function Register() {
 
@@ -38,6 +40,7 @@ export default function Register() {
 
     const onSubmit = async (data) => {
         toast.success(JSON.stringify(data));
+        await postData(apiConfig?.REGISTER, data)
     };
 
     const onSuccess = () => {

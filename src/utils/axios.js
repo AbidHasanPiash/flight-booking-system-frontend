@@ -1,6 +1,6 @@
 import axios from 'axios';
-import user from '@/utils/user';
-import apiConfig from '@/configs/apiConfig';
+import user from './user';
+import apiConfig from '../configs/apiConfig';
 import { toast } from 'sonner';
 
 const axiosInstance = axios.create({
@@ -38,9 +38,9 @@ export const handleAxiosError = (error) => {
         // Handle the case when the detail field is an array
         const errorMessage = error.response?.data?.data?.message || error.response?.data?.message;
         
-        if (code === 401) {
-            user.logout(true);
-        }
+        // if (code === 401) {
+        //     user.logout(true);
+        // }
         
         if (code === 404) {
             toast.warning(`No Data: ${code} - ${errorMessage}`);

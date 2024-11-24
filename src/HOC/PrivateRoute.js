@@ -1,6 +1,7 @@
 import React from "react";
 import { Navigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
+import Spinner from "../components/common/Spinner";
 
 // Props:
 // - children: The component to render if authorized
@@ -10,7 +11,7 @@ export default function PrivateRoute({ children, requiredRole }) {
 
     if (loading) {
         // Show a loading spinner or placeholder while auth state is being initialized
-        return <div>Loading...</div>;
+        return <div><Spinner size="4" /></div>;
     }
 
     if (!user) {

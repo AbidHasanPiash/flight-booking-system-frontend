@@ -5,11 +5,12 @@ import Submit from '../buttons/Submit';
 import Spinner from '../common/Spinner';
 import { RiSendPlaneLine } from 'react-icons/ri';
 import InputWrapper from '../common/InputWrapper';
-import { toast } from 'sonner';
 import { postData } from '../../utils/axios';
 import apiConfig from '../../configs/apiConfig';
+import { useQueryClient } from '@tanstack/react-query';
 
 export default function FlightForm() {
+    const queryClient = useQueryClient();
 
     const validationSchema = Yup.object({
         airline: Yup.string().required("Airline name is required"),
@@ -37,6 +38,7 @@ export default function FlightForm() {
     const onSubmit = async (data) => {
         // toast.info(JSON.stringify(data))
         await postData(apiConfig.CREATE_FLIGHT, data)
+        queryClient.invalidateQueries(['flights']);
     };
 
     const onSuccess = () => {
@@ -50,87 +52,90 @@ export default function FlightForm() {
         onSuccess,
     });
     return (
-        <form onSubmit={formik.handleSubmit} className="grid grid-cols-2 gap-4 mb-6">
-                    <InputWrapper label="Airline" error={formik.errors?.airline} touched={formik.touched?.airline}>
-                        <input
-                            name="airline"
-                            placeholder="Airline Name"
-                            value={formik.values?.airline}
-                            onChange={formik.handleChange}
-                            onBlur={formik.handleBlur}
-                            className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                        />
-                    </InputWrapper>
-                    <InputWrapper label="Origin" error={formik.errors?.origin} touched={formik.touched?.origin}>
-                        <input
-                            name="origin"
-                            placeholder="Origin"
-                            value={formik.values?.origin}
-                            onChange={formik.handleChange}
-                            onBlur={formik.handleBlur}
-                            className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                        />
-                    </InputWrapper>
-                    <InputWrapper label="Destination" error={formik.errors?.destination} touched={formik.touched?.destination}>
-                        <input
-                            name="destination"
-                            placeholder="Destination"
-                            value={formik.values?.destination}
-                            onChange={formik.handleChange}
-                            onBlur={formik.handleBlur}
-                            className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                        />
-                    </InputWrapper>
-                    <InputWrapper label="Departure Date" error={formik.errors?.departureDate} touched={formik.touched?.departureDate}>
-                        <input
-                            name="departureDate"
-                            type="datetime-local"
-                            value={formik.values?.departureDate}
-                            onChange={formik.handleChange}
-                            onBlur={formik.handleBlur}
-                            className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                        />
-                    </InputWrapper>
-                    <InputWrapper label="Price" error={formik.errors?.price} touched={formik.touched?.price}>
-                        <input
-                            name="price"
-                            type="number"
-                            placeholder="Price"
-                            value={formik.values?.price}
-                            onChange={formik.handleChange}
-                            onBlur={formik.handleBlur}
-                            className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                        />
-                    </InputWrapper>
-                    <InputWrapper label="Available Seats" error={formik.errors?.availableSeats} touched={formik.touched?.availableSeats}>
-                        <input
-                            name="availableSeats"
-                            type="number"
-                            placeholder="Available Seats"
-                            value={formik.values?.availableSeats}
-                            onChange={formik.handleChange}
-                            onBlur={formik.handleBlur}
-                            className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                        />
-                    </InputWrapper>
-                    <InputWrapper label="Duration" error={formik.errors?.duration} touched={formik.touched?.duration}>
-                        <input
-                            name="duration"
-                            placeholder="Duration (e.g., 5h 30m)"
-                            value={formik.values?.duration}
-                            onChange={formik.handleChange}
-                            onBlur={formik.handleBlur}
-                            className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                        />
-                    </InputWrapper>
-                    <div className="col-span-2">
-                        <Submit
-                            disabled={mutation.isPending}
-                            label={mutation.isPending ? "Processing..." : "Submit"}
-                            icon={mutation.isPending ? <Spinner size="4" /> : <RiSendPlaneLine />}
-                            className="w-full"
-                        />
-                    </div>
-                </form>
+        <form onSubmit={formik.handleSubmit} className='mb-6'>
+            <div className="grid grid-cols-3 gap-4">
+                <InputWrapper label="Airline" error={formik.errors?.airline} touched={formik.touched?.airline}>
+                    <input
+                        name="airline"
+                        placeholder="Airline Name"
+                        value={formik.values?.airline}
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
+                        className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    />
+                </InputWrapper>
+                <InputWrapper label="Origin" error={formik.errors?.origin} touched={formik.touched?.origin}>
+                    <input
+                        name="origin"
+                        placeholder="Origin"
+                        value={formik.values?.origin}
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
+                        className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    />
+                </InputWrapper>
+                <InputWrapper label="Destination" error={formik.errors?.destination} touched={formik.touched?.destination}>
+                    <input
+                        name="destination"
+                        placeholder="Destination"
+                        value={formik.values?.destination}
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
+                        className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    />
+                </InputWrapper>
+            </div>
+            <div className="grid grid-cols-4 gap-4">
+                <InputWrapper label="Departure Date" error={formik.errors?.departureDate} touched={formik.touched?.departureDate}>
+                    <input
+                        name="departureDate"
+                        type="datetime-local"
+                        value={formik.values?.departureDate}
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
+                        className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    />
+                </InputWrapper>
+                <InputWrapper label="Price" error={formik.errors?.price} touched={formik.touched?.price}>
+                    <input
+                        name="price"
+                        type="number"
+                        placeholder="Price"
+                        value={formik.values?.price}
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
+                        className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    />
+                </InputWrapper>
+                <InputWrapper label="Available Seats" error={formik.errors?.availableSeats} touched={formik.touched?.availableSeats}>
+                    <input
+                        name="availableSeats"
+                        type="number"
+                        placeholder="Available Seats"
+                        value={formik.values?.availableSeats}
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
+                        className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    />
+                </InputWrapper>
+                <InputWrapper label="Duration" error={formik.errors?.duration} touched={formik.touched?.duration}>
+                    <input
+                        name="duration"
+                        placeholder="Duration (e.g., 5h 30m)"
+                        value={formik.values?.duration}
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
+                        className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    />
+                </InputWrapper>
+            </div>
+            <div className="flex items-center justify-end mt-4">
+                <Submit
+                    disabled={mutation.isPending}
+                    label={mutation.isPending ? "Processing..." : "Submit"}
+                    icon={mutation.isPending ? <Spinner size="4" /> : <RiSendPlaneLine />}
+                />
+            </div>
+        </form>
     )
 }

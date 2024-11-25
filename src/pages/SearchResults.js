@@ -125,7 +125,7 @@ export default function SearchResults() {
             </div>
 
             {/* Flight results */}
-            <div className="max-w-7xl mx-auto">
+            <div className="max-w-7xl mx-auto min-h-screen">
                 <div className="m-4 grid gap-4">
                     {flightsLoading ? (
                         <div>Loading flights...</div>

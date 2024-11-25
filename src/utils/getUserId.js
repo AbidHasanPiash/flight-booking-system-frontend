@@ -1,7 +1,9 @@
 import decodeToken from "./decodeToken";
+import user from "./user";
 
-export function getUserId(token) {
+export function getUserId() {
     try {
+        const token = user.getToken()
         const decodedToken = decodeToken(token); // Decode the token
         return decodedToken.id; // Extract and return the user ID
     } catch (error) {

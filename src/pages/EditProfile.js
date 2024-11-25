@@ -4,8 +4,9 @@ import Spinner from "../components/common/Spinner";
 import InputWrapper from "../components/common/InputWrapper";
 import * as Yup from "yup";
 import { RiSendPlaneLine } from "react-icons/ri";
-import { toast } from "sonner";
 import { useFormWithMutation } from "../utils/useFormWithMutation";
+import { updateData } from "../utils/axios";
+import apiConfig from "../configs/apiConfig";
 
 export default function EditProfile() {
 
@@ -30,7 +31,7 @@ export default function EditProfile() {
     };
 
     const onSubmit = async (data) => {
-        toast.success(JSON.stringify(data));
+        await updateData(apiConfig?.UPDATE_PROFILE, data)
     };
 
     const onSuccess = () => {

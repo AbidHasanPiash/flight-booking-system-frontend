@@ -6,7 +6,7 @@ export default function AdminDashboard() {
         <div className="min-h-screen p-8 bg-gray-100">
 
             {/* Navigation Links */}
-            <nav className="flex items-center justify-between pb-4">
+            <nav className="flex flex-col md:flex-row items-center justify-between pb-4">
                 <Link to={'/admin'} className="text-3xl font-bold text-center text-gray-800 mb-6">Admin Dashboard</Link>
                 <div className="space-x-2">
                     <Link to="/admin/flights" className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600"> Manage Flights </Link>

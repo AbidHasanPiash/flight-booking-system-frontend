@@ -17,6 +17,7 @@ import AdminFlights from './pages/admin/AdminFlights';
 import FlightCreate from './pages/admin/FlightCreate';
 import FlightEdit from './pages/admin/FlightEdit';
 import AdminBookings from './pages/admin/AdminBookings';
+import AdminOverview from './pages/admin/AdminOverview';
 
 function App() {
     return (
@@ -36,6 +37,7 @@ function App() {
 
                     {/* Nested admin routes */}
                     <Route path="/admin" element={<PrivateRoute requiredRole="admin"> <AdminDashboard /> </PrivateRoute>}>
+                        <Route index element={<AdminOverview />} />
                         <Route path="flights" element={<AdminFlights />} />
                         <Route path="flights/create" element={<FlightCreate />} />
                         <Route path="flights/edit/:id" element={<FlightEdit />} />

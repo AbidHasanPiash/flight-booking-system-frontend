@@ -9,33 +9,32 @@ export default function Home() {
         <div className="bg-[radial-gradient(ellipse_at_right,_var(--tw-gradient-stops))] from-blue-500 to-indigo-900 text-white">
 
             {/* Hero Section */}
-            <section className="max-w-7xl mx-auto p-2 md:p-4">
-                <div className="w-full h-full flex flex-col space-y-10 justify-between">
+            <section className="max-w-7xl mx-auto px-4 md:px-8 py-12 md:py-16 flex flex-col items-center space-y-10">
+                {/* Hero Text */}
+                <div className="text-center">
+                    <h2 className="text-4xl md:text-5xl xl:text-6xl font-extrabold leading-tight text-white">
+                        Your Gateway to the World
+                    </h2>
+                    <p className="text-base md:text-lg text-gray-200 mt-4">
+                        Find the best deals on flights and book your journey with ease. Adventure awaits at your fingertips.
+                    </p>
+                    <button className="mt-6 px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-medium text-lg rounded-lg shadow-md transition">
+                        Explore Flights
+                    </button>
+                </div>
 
-                    {/* Hero Text */}
-                    <div className="flex flex-col items-center justify-center mx-auto">
-                        <div className="max-w-2xl">
-                            <h2 className="text-center text-3xl md:text-4xl xl:text-5xl font-extrabold mb-6">
-                                Your Gateway to the World
-                            </h2>
-                            <p className="text-sm text-center md:text-base mb-8">
-                                Find the best deals on flights and book your journey with ease. Adventure awaits at your fingertips.
-                            </p>
-                        </div>
-                    </div>
+                {/* Search Bar */}
+                <SearchCard />
 
-                    {/* Search Bar */}
-                    <SearchCard />
-
-                    {/* Hero Image */}
-                    <div className="mx-auto flex flex-grow">
-                        <div className="w-full h-full flex items-center justify-center">
-                            <img
-                                src="/images/homepage-plan-image.png"
-                                alt="Airplane flying into the sunset"
-                                className="aspect-auto object-contain p-10"
-                            />
-                        </div>
+                {/* Hero Image */}
+                <div className="relative w-full max-w-3xl mx-auto mt-10">
+                    <img
+                        src="/images/homepage-plan-image.png"
+                        alt="Airplane flying into the sunset"
+                    />
+                    {/* Decorative Icon */}
+                    <div className="absolute top-4 right-4 bg-white p-3 rounded-full shadow-md">
+                        <MdOutlineFlightTakeoff className="text-blue-600 text-3xl" />
                     </div>
                 </div>
             </section>

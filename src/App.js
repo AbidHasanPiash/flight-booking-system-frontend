@@ -13,6 +13,10 @@ import Register from "./pages/Register";
 import UserLayout from './components/layout/UserLayout';
 import PrivateRoute from './HOC/PrivateRoute';
 import EditProfile from './pages/EditProfile';
+import AdminFlights from './pages/admin/AdminFlights';
+import FlightCreate from './pages/admin/FlightCreate';
+import FlightEdit from './pages/admin/FlightEdit';
+import AdminBookings from './pages/admin/AdminBookings';
 
 function App() {
     return (
@@ -25,33 +29,17 @@ function App() {
                     <Route path="/flights" element={<SearchResults />} />
                     <Route path="/flight/:id" element={<FlightDetails />} />
                     <Route path="/booking" element={<Booking />} />
+
                     {/* Protect /profile route for authenticated users */}
-                    <Route
-                        path="/profile"
-                        element={
-                            <PrivateRoute>
-                                <UserProfile />
-                            </PrivateRoute>
-                        }
-                    />
-                    {/* Nested route for profile editing */}
-                    <Route
-                        path="/profile/edit"
-                        element={
-                            <PrivateRoute>
-                                <EditProfile />
-                            </PrivateRoute>
-                        }
-                    />
-                    {/* Protect /admin route for admin users */}
-                    <Route
-                        path="/admin"
-                        element={
-                            <PrivateRoute requiredRole="admin">
-                                <AdminDashboard />
-                            </PrivateRoute>
-                        }
-                    />
+                    <Route path="/profile" element={<PrivateRoute> <UserProfile /> </PrivateRoute> }/>
+                    <Route path="/profile/edit" element={<PrivateRoute> <EditProfile /> </PrivateRoute>}/>
+                    
+                    {/* Nested admin routes */}
+                    <Route path="/admin" element={<PrivateRoute requiredRole="admin"> <AdminDashboard /> </PrivateRoute>}/>
+                    <Route path="/admin/bookings" element={<PrivateRoute requiredRole="admin"> <AdminBookings /> </PrivateRoute>}/>
+                    <Route path="/admin/flights" element={<PrivateRoute requiredRole="admin"> <AdminFlights /> </PrivateRoute>}/>
+                    <Route path="/admin/flights/create" element={<PrivateRoute requiredRole="admin"> <FlightCreate /> </PrivateRoute>}/>
+                    <Route path="/admin/flights/edit/:id" element={<PrivateRoute requiredRole="admin"> <FlightEdit /> </PrivateRoute>}/>
                 </Routes>
             </UserLayout>
         </Router>

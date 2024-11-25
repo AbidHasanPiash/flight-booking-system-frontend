@@ -107,7 +107,7 @@ const isLoggedIn = () => {
     return token;
 };
 
-export default {
+const user = {
     login,
     signup,
     logout,
@@ -117,3 +117,5 @@ export default {
     isLoggedIn,
 
 }
+
+export default user

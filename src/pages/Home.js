@@ -1,5 +1,4 @@
 import React from "react";
-// import { Link } from "react-router-dom";
 import SearchCard from "../components/card/SearchCard";
 
 export default function Home() {
@@ -9,33 +8,21 @@ export default function Home() {
             {/* Hero Section */}
             <section className="max-w-7xl mx-auto p-2 md:p-4">
                 <div className="w-full h-full flex flex-col space-y-10 justify-between">
-                    
-                    {/* Hero text */}
+
+                    {/* Hero Text */}
                     <div className="flex flex-col items-center justify-center mx-auto">
                         <div className="max-w-2xl">
-                            <h2 className="text-center text-3xl md:text-4xl xl:text-5xl font-extrabold mb-6">Your Gateway to the World</h2>
+                            <h2 className="text-center text-3xl md:text-4xl xl:text-5xl font-extrabold mb-6">
+                                Your Gateway to the World
+                            </h2>
                             <p className="text-sm text-center md:text-base mb-8">
                                 Find the best deals on flights and book your journey with ease. Adventure awaits at your fingertips.
                             </p>
                         </div>
-
-                        {/* Quick Links */}
-                        {/* <div className="flex gap-6 mx-auto">
-                            <Link to="/flights">
-                                <button className="px-6 py-3 bg-indigo-500 rounded-lg font-medium hover:bg-indigo-600">
-                                    Browse Flights
-                                </button>
-                            </Link>
-                            <Link to="/booking">
-                                <button className="px-6 py-3 bg-teal-500 rounded-lg font-medium hover:bg-teal-600">
-                                    Manage Bookings
-                                </button>
-                            </Link>
-                        </div> */}
                     </div>
 
-                    {/* Search bar */}
-                    <SearchCard/>
+                    {/* Search Bar */}
+                    <SearchCard />
 
                     {/* Hero Image */}
                     <div className="mx-auto flex flex-grow">
@@ -50,24 +37,66 @@ export default function Home() {
                 </div>
             </section>
 
-            {/* Image Gallery Section */}
-            <section className="w-full bg-white py-10">
-                <div className="max-w-6xl mx-auto px-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    <img
-                        src="https://via.placeholder.com/500x300?text=Airport+Runway"
-                        alt="Airport Runway"
-                        className="rounded-lg shadow-lg"
-                    />
-                    <img
-                        src="https://via.placeholder.com/500x300?text=Flight+Boarding"
-                        alt="Flight Boarding"
-                        className="rounded-lg shadow-lg"
-                    />
-                    <img
-                        src="https://via.placeholder.com/500x300?text=Inside+Airplane"
-                        alt="Inside Airplane"
-                        className="rounded-lg shadow-lg"
-                    />
+            {/* Why Choose Us Section */}
+            <section className="bg-white text-gray-800 py-10">
+                <div className="max-w-6xl mx-auto px-4 text-center space-y-6">
+                    <h3 className="text-2xl md:text-3xl font-bold">Why Choose Us?</h3>
+                    <p className="text-base md:text-lg">
+                        With our platform, you get the most competitive flight deals, unmatched convenience, and a seamless booking experience.
+                    </p>
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-8">
+                        <div className="p-4 border rounded-lg shadow-lg">
+                            <h4 className="font-bold text-lg">Best Deals</h4>
+                            <p>Enjoy exclusive discounts and offers on flights worldwide.</p>
+                        </div>
+                        <div className="p-4 border rounded-lg shadow-lg">
+                            <h4 className="font-bold text-lg">24/7 Support</h4>
+                            <p>Our customer support team is here to assist you anytime.</p>
+                        </div>
+                        <div className="p-4 border rounded-lg shadow-lg">
+                            <h4 className="font-bold text-lg">Secure Booking</h4>
+                            <p>Your information is protected with advanced encryption technology.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            {/* Statistics Section */}
+            <section className="bg-blue-600 text-white py-10">
+                <div className="max-w-6xl mx-auto px-4 grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+                    <div>
+                        <h4 className="text-4xl font-bold">500+</h4>
+                        <p>Destinations</p>
+                    </div>
+                    <div>
+                        <h4 className="text-4xl font-bold">1M+</h4>
+                        <p>Happy Travelers</p>
+                    </div>
+                    <div>
+                        <h4 className="text-4xl font-bold">24/7</h4>
+                        <p>Support Availability</p>
+                    </div>
+                </div>
+            </section>
+
+            {/* Testimonials Section */}
+            <section className="bg-gray-100 text-gray-800 py-10">
+                <div className="max-w-6xl mx-auto px-4 text-center space-y-6">
+                    <h3 className="text-2xl md:text-3xl font-bold">What Our Customers Say</h3>
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                        <div className="p-4 border rounded-lg shadow-lg bg-white">
+                            <p className="italic">"Booking flights has never been this easy! Highly recommended."</p>
+                            <p className="mt-4 font-bold">- John D.</p>
+                        </div>
+                        <div className="p-4 border rounded-lg shadow-lg bg-white">
+                            <p className="italic">"Got the best deals and excellent customer service."</p>
+                            <p className="mt-4 font-bold">- Sarah K.</p>
+                        </div>
+                        <div className="p-4 border rounded-lg shadow-lg bg-white">
+                            <p className="italic">"Seamless experience from start to finish."</p>
+                            <p className="mt-4 font-bold">- Mark L.</p>
+                        </div>
+                    </div>
                 </div>
             </section>
         </div>

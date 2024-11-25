@@ -39,9 +39,19 @@ const UserLayout = ({ children }) => {
 
             {/* Footer */}
             {!shouldHideNav && (
-                <footer className="bg-gray-800 text-gray-300 py-6 text-center">
-                    <p>© 2024 {appConfig?.Name}. All rights reserved.</p>
-                </footer>
+                // <footer className="bg-gray-800 text-gray-300 py-6 text-center">
+                //     <p>© 2024 {appConfig?.Name}. All rights reserved.</p>
+                // </footer>
+                <footer className="bg-gray-900 text-white py-8">
+                <div className="max-w-6xl mx-auto px-4 text-center">
+                    <p>&copy; {new Date().getFullYear()} {appConfig?.Name}. All Rights Reserved.</p>
+                    <p className="mt-4">
+                        <Link to="#" className="text-blue-400 hover:underline">Privacy Policy</Link> | 
+                        <Link to="#" className="text-blue-400 hover:underline ml-2">Terms of Service</Link> | 
+                        <Link to="/admin" className="text-blue-400 hover:underline ml-2">Admin ?</Link>
+                    </p>
+                </div>
+            </footer>
             )}
         </div>
     );

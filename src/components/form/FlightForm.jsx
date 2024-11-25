@@ -8,6 +8,7 @@ import InputWrapper from '../common/InputWrapper';
 import { postData, updateData } from '../../utils/axios';
 import apiConfig from '../../configs/apiConfig';
 import { useQueryClient } from '@tanstack/react-query';
+import flightDateConfig from '../../configs/flightDateConfig';
 
 export default function FlightForm({ flight }) {
     const queryClient = useQueryClient();
@@ -16,7 +17,10 @@ export default function FlightForm({ flight }) {
         airline: Yup.string().required("Airline name is required"),
         origin: Yup.string().required("Origin is required"),
         destination: Yup.string().required("Destination is required"),
-        departureDate: Yup.date().required("Departure date is required"),
+        departureDate: Yup.date()
+            .required("Departure date is required")
+            .min(flightDateConfig?.minDate, "Date cannot be in the past")
+            .max(flightDateConfig?.maxDate, "Date cannot be beyond 10 days from today"),
         price: Yup.number().positive("Price must be positive").required("Price is required"),
         availableSeats: Yup.number()
             .integer("Seats must be a whole number")
@@ -36,10 +40,17 @@ export default function FlightForm({ flight }) {
     };
 
     const onSubmit = async (data) => {
+        // Make the origin and destination uppercase before submitting
+        const updatedData = {
+            ...data,
+            origin: data?.origin.toUpperCase(),
+            destination: data?.destination.toUpperCase(),
+        };
+
         if (flight) {
-            await updateData(apiConfig.UPDATE_FLIGHT + flight?._id, data)
+            await updateData(apiConfig.UPDATE_FLIGHT + flight?._id, updatedData);
         } else {
-            await postData(apiConfig.CREATE_FLIGHT, data)
+            await postData(apiConfig.CREATE_FLIGHT, updatedData);
         }
         queryClient.invalidateQueries(['flights']);
     };
@@ -93,6 +104,8 @@ export default function FlightForm({ flight }) {
                     <input
                         name="departureDate"
                         type="datetime-local"
+                        min={flightDateConfig?.minDate}
+                        max={flightDateConfig?.maxDate}
                         value={formik.values?.departureDate}
                         onChange={formik.handleChange}
                         onBlur={formik.handleBlur}

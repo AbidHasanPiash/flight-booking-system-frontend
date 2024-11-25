@@ -5,7 +5,6 @@ import Spinner from "../components/common/Spinner";
 import InputWrapper from "../components/common/InputWrapper";
 import * as Yup from "yup";
 import { RiSearchLine } from "react-icons/ri";
-import { toast } from "sonner";
 import { useFormWithMutation } from "../utils/useFormWithMutation";
 import { useSearchParams } from "react-router-dom";
 import flightDateConfig from "../configs/flightDateConfig";

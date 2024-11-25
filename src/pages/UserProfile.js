@@ -88,28 +88,40 @@ export default function UserProfile() {
                 <div>
                     <h2 className="text-xl font-semibold text-gray-700 mb-4">Purchase History</h2>
                     {bookings && bookings.length > 0 ? (
-                        <table className="min-w-full bg-white border border-gray-200 rounded-lg overflow-hidden">
-                            <thead className="bg-gray-100">
-                                <tr>
-                                    <th className="px-4 py-2 text-left text-gray-700 font-medium">Flight ID</th>
-                                    <th className="px-4 py-2 text-left text-gray-700 font-medium">Seats</th>
-                                    <th className="px-4 py-2 text-left text-gray-700 font-medium">Date</th>
-                                    <th className="px-4 py-2 text-left text-gray-700 font-medium">Total Price</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {bookings.map((history) => (
-                                    <tr key={history._id} className="border-t">
-                                        <td className="px-4 py-2 text-gray-700">{history.flightId}</td>
-                                        <td className="px-4 py-2 text-gray-700">{history.numberOfSeats}</td>
-                                        <td className="px-4 py-2 text-gray-700">
-                                            {new Date(history.bookingDate).toLocaleDateString()}
-                                        </td>
-                                        <td className="px-4 py-2 text-gray-700">${history.totalPrice.toFixed(2)}</td>
+                        <div className="overflow-x-auto">
+                            <table className="min-w-full bg-white border border-gray-200 rounded-lg overflow-hidden">
+                                <thead className="bg-gray-100">
+                                    <tr>
+                                        <th className="px-4 py-2 text-left text-gray-700 font-medium whitespace-nowrap">
+                                            Flight ID
+                                        </th>
+                                        <th className="px-4 py-2 text-left text-gray-700 font-medium whitespace-nowrap">
+                                            Seats
+                                        </th>
+                                        <th className="px-4 py-2 text-left text-gray-700 font-medium whitespace-nowrap">
+                                            Date
+                                        </th>
+                                        <th className="px-4 py-2 text-left text-gray-700 font-medium whitespace-nowrap">
+                                            Total Price
+                                        </th>
                                     </tr>
-                                ))}
-                            </tbody>
-                        </table>
+                                </thead>
+                                <tbody>
+                                    {bookings.map((history) => (
+                                        <tr key={history._id} className="border-t">
+                                            <td className="px-4 py-2 text-gray-700 whitespace-nowrap">{history.flightId}</td>
+                                            <td className="px-4 py-2 text-gray-700 whitespace-nowrap">{history.numberOfSeats}</td>
+                                            <td className="px-4 py-2 text-gray-700 whitespace-nowrap">
+                                                {new Date(history.bookingDate).toLocaleDateString()}
+                                            </td>
+                                            <td className="px-4 py-2 text-gray-700 whitespace-nowrap">
+                                                ${history.totalPrice.toFixed(2)}
+                                            </td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
+                        </div>
                     ) : (
                         <p className="text-gray-600">No purchase history available.</p>
                     )}

@@ -8,7 +8,7 @@ const UserLayout = ({ children }) => {
     const { user } = useAuth();
 
     // Define routes where the navigation bar should not appear
-    const noNavRoutes = ["/login", "/register", "/admin"];
+    const noNavRoutes = ["/login", "/register"];
     const shouldHideNav = noNavRoutes.includes(location.pathname);
 
     return (

@@ -31,15 +31,21 @@ function App() {
                     <Route path="/booking" element={<Booking />} />
 
                     {/* Protect /profile route for authenticated users */}
-                    <Route path="/profile" element={<PrivateRoute> <UserProfile /> </PrivateRoute> }/>
-                    <Route path="/profile/edit" element={<PrivateRoute> <EditProfile /> </PrivateRoute>}/>
-                    
+                    <Route path="/profile" element={<PrivateRoute> <UserProfile /> </PrivateRoute>} />
+                    <Route path="/profile/edit" element={<PrivateRoute> <EditProfile /> </PrivateRoute>} />
+
                     {/* Nested admin routes */}
-                    <Route path="/admin" element={<PrivateRoute requiredRole="admin"> <AdminDashboard /> </PrivateRoute>}/>
+                    {/* <Route path="/admin" element={<PrivateRoute requiredRole="admin"> <AdminDashboard /> </PrivateRoute>}/>
                     <Route path="/admin/bookings" element={<PrivateRoute requiredRole="admin"> <AdminBookings /> </PrivateRoute>}/>
                     <Route path="/admin/flights" element={<PrivateRoute requiredRole="admin"> <AdminFlights /> </PrivateRoute>}/>
                     <Route path="/admin/flights/create" element={<PrivateRoute requiredRole="admin"> <FlightCreate /> </PrivateRoute>}/>
-                    <Route path="/admin/flights/edit/:id" element={<PrivateRoute requiredRole="admin"> <FlightEdit /> </PrivateRoute>}/>
+                    <Route path="/admin/flights/edit/:id" element={<PrivateRoute requiredRole="admin"> <FlightEdit /> </PrivateRoute>}/> */}
+                    <Route path="/admin" element={<PrivateRoute requiredRole="admin"> <AdminDashboard /> </PrivateRoute>}>
+                        <Route path="flights" element={<AdminFlights />} />
+                        <Route path="flights/create" element={<FlightCreate />} />
+                        <Route path="flights/edit/:id" element={<FlightEdit />} />
+                        <Route path="bookings" element={<AdminBookings />} />
+                    </Route>
                 </Routes>
             </UserLayout>
         </Router>

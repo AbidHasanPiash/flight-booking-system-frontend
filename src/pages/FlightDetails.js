@@ -125,7 +125,7 @@ export default function FlightDetails() {
 
                     {/* Seat Selection */}
                     <div className="mt-10">
-                        <h2 className="text-xl font-bold text-gray-800 mb-4">Select Your Seat</h2>
+                        <h2 className="text-xl font-bold text-gray-800 mb-4">Select Your Seat (mock seat)</h2>
                         <div className="inline-flex flex-col gap-4 bg-gray-100 p-6 rounded-lg">
                             {Array.from({ length: 6 }, (_, rowIndex) => (
                                 <div key={rowIndex} className="flex gap-4 items-center">

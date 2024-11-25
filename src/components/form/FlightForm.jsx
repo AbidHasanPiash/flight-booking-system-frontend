@@ -13,14 +13,18 @@ import flightDateConfig from '../../configs/flightDateConfig';
 export default function FlightForm({ flight }) {
     const queryClient = useQueryClient();
 
+    // Ensure minDate and maxDate are correctly set
+    const minDate = flightDateConfig?.minDate || new Date().toISOString().slice(0, 16);
+    const maxDate = flightDateConfig?.maxDate || new Date(new Date().setDate(new Date().getDate() + 10)).toISOString().slice(0, 16); 
+
     const validationSchema = Yup.object({
         airline: Yup.string().required("Airline name is required"),
         origin: Yup.string().required("Origin is required"),
         destination: Yup.string().required("Destination is required"),
         departureDate: Yup.date()
             .required("Departure date is required")
-            .min(flightDateConfig?.minDate, "Date cannot be in the past")
-            .max(flightDateConfig?.maxDate, "Date cannot be beyond 10 days from today"),
+            .min(minDate, "Date cannot be in the past")
+            .max(maxDate, "Date cannot be beyond 10 days from today"),
         price: Yup.number().positive("Price must be positive").required("Price is required"),
         availableSeats: Yup.number()
             .integer("Seats must be a whole number")
@@ -65,6 +69,7 @@ export default function FlightForm({ flight }) {
         onSubmit,
         onSuccess,
     });
+    
     return (
         <form onSubmit={formik.handleSubmit} className='mb-6'>
             <div className="grid grid-cols-3 gap-4">
@@ -104,8 +109,8 @@ export default function FlightForm({ flight }) {
                     <input
                         name="departureDate"
                         type="datetime-local"
-                        min={flightDateConfig?.minDate}
-                        max={flightDateConfig?.maxDate}
+                        min={minDate}
+                        max={maxDate}
                         value={formik.values?.departureDate}
                         onChange={formik.handleChange}
                         onBlur={formik.handleBlur}

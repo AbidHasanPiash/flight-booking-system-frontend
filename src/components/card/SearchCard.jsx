@@ -16,7 +16,7 @@ export default function SearchCard() {
     // Handle search button click
     const handleSearch = () => {
         if (origin && destination && travelDate) {
-            navigate(`/flights?origin=${encodeURIComponent(origin)}&destination=${encodeURIComponent(destination)}&date=${encodeURIComponent(travelDate)}`);
+            navigate(`/flights?origin=${encodeURIComponent(origin.toUpperCase())}&destination=${encodeURIComponent(destination.toUpperCase())}&date=${encodeURIComponent(travelDate)}`);
         } else {
             alert("Please fill out all fields!");
         }

@@ -1,15 +1,38 @@
 import React from "react";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { format } from "date-fns";
 import apiConfig from "../../configs/apiConfig";
-import { fetchData } from "../../utils/axios";
+import { deleteData, fetchData } from "../../utils/axios"; // Add deleteData utility
 import { Link } from "react-router-dom";
 
 export default function FlightTable() {
+    const queryClient = useQueryClient();
+
+    // Fetch flights data
     const { isLoading: flightsLoading, data: flights } = useQuery({
         queryKey: ["flights"],
         queryFn: () => fetchData(apiConfig?.GET_FLIGHT),
     });
+
+    // Delete mutation
+    const deleteMutation = useMutation({
+        mutationFn: (id) => deleteData(apiConfig?.DELETE_FLIGHT, id), // API endpoint for deletion
+        onSuccess: () => {
+            // Invalidate flights query to refresh the table
+            queryClient.invalidateQueries(["flights"]);
+        },
+        onError: (error) => {
+            console.error("Failed to delete flight:", error);
+        },
+    });
+
+    // Delete flight handler
+    const onDeleteFlight = (id) => {
+        if (window.confirm("Are you sure you want to delete this flight?")) {
+            deleteMutation.mutate(id);
+        }
+    };
+
     return (
         <div className="overflow-x-auto">
             <table className="w-full border border-collapse">
@@ -50,10 +73,10 @@ export default function FlightTable() {
                                         Edit
                                     </Link>
                                     <button
+                                        onClick={() => onDeleteFlight(flight._id)}
                                         className="text-red-500 hover:underline"
-                                    // onClick={() => onDeleteFlight(flight._id)}
                                     >
-                                        Delete
+                                        {deleteMutation.isLoading ? "Deleting..." : "Delete"}
                                     </button>
                                 </td>
                             </tr>
@@ -68,5 +91,5 @@ export default function FlightTable() {
                 </tbody>
             </table>
         </div>
-    )
+    );
 }

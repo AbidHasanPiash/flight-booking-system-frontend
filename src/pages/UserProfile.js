@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { FaPlaneDeparture } from "react-icons/fa";
 import { useAuth } from "../context/AuthContext";
@@ -10,30 +10,14 @@ import apiConfig from "../configs/apiConfig";
 export default function UserProfile() {
     const navigate = useNavigate();
     const { user, logout } = useAuth();
-    const userIFromToken = getUserId();
+    const userIdFromToken = getUserId();
 
-    // Fetch flight details by ID
-    const { isLoading, data: flight } = useQuery({
-        queryKey: ["flight", userIFromToken],
-        queryFn: () => fetchData(apiConfig.GET_BOOKING_BY_USER_ID + userIFromToken), // Ensure the endpoint is correct
-        enabled: !!userIFromToken, // Only run the query when ID is available
+    // Fetch flight bookings by user ID
+    const { isLoading, data: bookings } = useQuery({
+        queryKey: ["flightBookings", userIdFromToken],
+        queryFn: () => fetchData(apiConfig.GET_BOOKING_BY_USER_ID + userIdFromToken),
+        enabled: !!userIdFromToken,
     });
-
-    const [currentBooking, setCurrentBooking] = useState({
-        flight: "Flight 202",
-        origin: "Paris",
-        destination: "Dubai",
-        date: "2024-12-15",
-        price: 500.00,
-        seats: ["A3", "B4"],
-    });
-
-    const handleCancelBooking = () => {
-        if (window.confirm("Are you sure you want to cancel your booking?")) {
-            setCurrentBooking(null);
-            alert("Your booking has been successfully canceled.");
-        }
-    };
 
     const handleLogout = () => {
         logout();
@@ -44,13 +28,18 @@ export default function UserProfile() {
         return <div className="text-center mt-10">Loading...</div>;
     }
 
+    const currentBooking = bookings?.[bookings.length - 1]; // Display the latest booking
+
     return (
         <div className="min-h-screen bg-gray-50 py-12">
             <div className="max-w-4xl mx-auto bg-white shadow-lg rounded-lg p-6">
+                {/* Header */}
                 <div className="flex justify-between items-center mb-6">
                     <div>
                         <h1 className="text-2xl font-bold text-gray-800">User Profile</h1>
-                        <Link to={'edit'}>Edit</Link>
+                        <Link to={'edit'} className="text-blue-600 hover:underline">
+                            Edit Profile
+                        </Link>
                     </div>
                     <button
                         onClick={handleLogout}
@@ -69,69 +58,54 @@ export default function UserProfile() {
                 </div>
 
                 {/* Current Booking */}
-                {currentBooking ? (
-                    <div className="mb-8">
-                        <h2 className="text-xl font-semibold text-gray-700">Current Booking</h2>
+                <div className="mb-8">
+                    <h2 className="text-xl font-semibold text-gray-700">Current Booking</h2>
+                    {currentBooking ? (
                         <div className="bg-blue-50 p-4 rounded-lg border border-blue-200">
                             <div className="flex items-center gap-4 mb-4">
                                 <FaPlaneDeparture className="text-blue-600 text-2xl" />
                                 <div>
-                                    <p className="text-gray-700 font-medium">
-                                        {currentBooking.flight}
-                                    </p>
-                                    <p className="text-gray-600">
-                                        {currentBooking.origin} → {currentBooking.destination}
-                                    </p>
+                                    <p className="text-gray-700 font-medium">Flight: {currentBooking.flightId}</p>
+                                    <p className="text-gray-600">Seats: {currentBooking.numberOfSeats}</p>
                                 </div>
                             </div>
                             <p className="text-gray-600">
-                                <strong>Date:</strong> {new Date(currentBooking.date).toLocaleDateString()}
+                                <strong>Date:</strong> {new Date(currentBooking.bookingDate).toLocaleDateString()}
                             </p>
                             <p className="text-gray-600">
-                                <strong>Price:</strong> ${currentBooking.price.toFixed(2)}
+                                <strong>Total Price:</strong> ${currentBooking.totalPrice.toFixed(2)}
                             </p>
                             <p className="text-gray-600">
-                                <strong>Seats:</strong> {currentBooking.seats.join(", ")}
+                                <strong>Status:</strong> {currentBooking.status}
                             </p>
-                            <button
-                                onClick={handleCancelBooking}
-                                className="mt-4 px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 focus:ring-2 focus:ring-red-400 transition"
-                            >
-                                Cancel Booking
-                            </button>
                         </div>
-                    </div>
-                ) : (
-                    <div className="mb-8">
-                        <h2 className="text-xl font-semibold text-gray-700">Current Booking</h2>
+                    ) : (
                         <p className="text-gray-600">No active bookings at the moment.</p>
-                    </div>
-                )}
+                    )}
+                </div>
 
                 {/* Purchase History */}
                 <div>
                     <h2 className="text-xl font-semibold text-gray-700 mb-4">Purchase History</h2>
-                    {flight && flight.length > 0 ? (
+                    {bookings && bookings.length > 0 ? (
                         <table className="min-w-full bg-white border border-gray-200 rounded-lg overflow-hidden">
                             <thead className="bg-gray-100">
                                 <tr>
-                                    <th className="px-4 py-2 text-left text-gray-700 font-medium">Flight</th>
-                                    <th className="px-4 py-2 text-left text-gray-700 font-medium">Route</th>
+                                    <th className="px-4 py-2 text-left text-gray-700 font-medium">Flight ID</th>
+                                    <th className="px-4 py-2 text-left text-gray-700 font-medium">Seats</th>
                                     <th className="px-4 py-2 text-left text-gray-700 font-medium">Date</th>
-                                    <th className="px-4 py-2 text-left text-gray-700 font-medium">Price</th>
+                                    <th className="px-4 py-2 text-left text-gray-700 font-medium">Total Price</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                {flight.map((history) => (
-                                    <tr key={history.id} className="border-t">
-                                        <td className="px-4 py-2 text-gray-700">{history.flight}</td>
+                                {bookings.map((history) => (
+                                    <tr key={history._id} className="border-t">
+                                        <td className="px-4 py-2 text-gray-700">{history.flightId}</td>
+                                        <td className="px-4 py-2 text-gray-700">{history.numberOfSeats}</td>
                                         <td className="px-4 py-2 text-gray-700">
-                                            {history.origin} → {history.destination}
+                                            {new Date(history.bookingDate).toLocaleDateString()}
                                         </td>
-                                        <td className="px-4 py-2 text-gray-700">
-                                            {new Date(history.date).toLocaleDateString()}
-                                        </td>
-                                        <td className="px-4 py-2 text-gray-700">${history.price.toFixed(2)}</td>
+                                        <td className="px-4 py-2 text-gray-700">${history.totalPrice.toFixed(2)}</td>
                                     </tr>
                                 ))}
                             </tbody>

@@ -1,11 +1,14 @@
 import React from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { postData } from "../utils/axios";
 import apiConfig from "../configs/apiConfig";
 import { useMutation } from "@tanstack/react-query";
 import { getUserId } from "../utils/getUserId";
+import Submit from "../components/buttons/Submit";
+import { toast } from "sonner";
 
 export default function Booking() {
+    const navigate = useNavigate();
     const location = useLocation();
     const { flight, selectedSeats } = location.state || {};
     const userIFromToken = getUserId();
@@ -20,13 +23,16 @@ export default function Booking() {
     };
 
     const onSubmit = async (data) => {
-        await postData(apiConfig.CREATE_BOOKING, data);
+        const res = await postData(apiConfig.CREATE_BOOKING, data);
+        return res
     };
 
     const mutation = useMutation({
         mutationKey: ["booking"],
         mutationFn: () => onSubmit(initialValues),
-        // onSuccess, // You can add success logic here
+        onSuccess: (data) => {
+            navigate("/profile");
+        },
     });
 
     return (
@@ -44,10 +50,6 @@ export default function Booking() {
                     <p className="text-blue-600 text-lg font-bold">Price per Seat: ${flight?.price.toFixed(2)}</p>
                 </div>
 
-                <div>
-                    user: {userIFromToken}
-                </div>
-
                 {/* Selected Seats */}
                 <div className="mb-6">
                     <h3 className="text-lg font-medium text-gray-700">Selected Seats</h3>
@@ -60,14 +62,12 @@ export default function Booking() {
 
                 {/* Confirm Booking Button */}
                 <div className="mt-6">
-                    <button
+                    <Submit
                         onClick={() => mutation.mutate()}
-                        className={`px-6 py-2 ${selectedSeats && selectedSeats.length > 0 ? "bg-blue-600 hover:bg-blue-700" : "bg-gray-400 cursor-not-allowed"
-                            } text-white rounded-lg focus:ring-2 focus:ring-blue-400 transition`}
-                        disabled={!selectedSeats || selectedSeats.length === 0}
-                    >
-                        Confirm Booking
-                    </button>
+                        disabled={mutation.isPending}
+                        label={mutation.isPending ? "Submitting..." : "Confirm"}
+                        className="w-full"
+                    />
                 </div>
             </div>
         </div>

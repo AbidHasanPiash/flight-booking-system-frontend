@@ -2,29 +2,23 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { FaPlaneDeparture } from "react-icons/fa";
 import { useAuth } from "../context/AuthContext";
-
-const mockPurchaseHistory = [
-    {
-        id: 1,
-        flight: "Flight 101",
-        origin: "New York",
-        destination: "London",
-        date: "2024-10-01",
-        price: 450.00,
-    },
-    {
-        id: 2,
-        flight: "Flight 102",
-        origin: "Toronto",
-        destination: "Tokyo",
-        date: "2024-09-15",
-        price: 600.00,
-    },
-];
+import { getUserId } from "../utils/getUserId";
+import { useQuery } from "@tanstack/react-query";
+import { fetchData } from "../utils/axios";
+import apiConfig from "../configs/apiConfig";
 
 export default function UserProfile() {
-    const { user, logout } = useAuth();
     const navigate = useNavigate();
+    const { user, logout } = useAuth();
+    const userIFromToken = getUserId();
+
+    // Fetch flight details by ID
+    const { isLoading, data: flight } = useQuery({
+        queryKey: ["flight", userIFromToken],
+        queryFn: () => fetchData(apiConfig.GET_BOOKING_BY_USER_ID + userIFromToken), // Ensure the endpoint is correct
+        enabled: !!userIFromToken, // Only run the query when ID is available
+    });
+
     const [currentBooking, setCurrentBooking] = useState({
         flight: "Flight 202",
         origin: "Paris",
@@ -45,6 +39,10 @@ export default function UserProfile() {
         logout();
         navigate("/login");
     };
+
+    if (isLoading) {
+        return <div className="text-center mt-10">Loading...</div>;
+    }
 
     return (
         <div className="min-h-screen bg-gray-50 py-12">
@@ -113,7 +111,7 @@ export default function UserProfile() {
                 {/* Purchase History */}
                 <div>
                     <h2 className="text-xl font-semibold text-gray-700 mb-4">Purchase History</h2>
-                    {mockPurchaseHistory.length > 0 ? (
+                    {flight && flight.length > 0 ? (
                         <table className="min-w-full bg-white border border-gray-200 rounded-lg overflow-hidden">
                             <thead className="bg-gray-100">
                                 <tr>
@@ -124,7 +122,7 @@ export default function UserProfile() {
                                 </tr>
                             </thead>
                             <tbody>
-                                {mockPurchaseHistory.map((history) => (
+                                {flight.map((history) => (
                                     <tr key={history.id} className="border-t">
                                         <td className="px-4 py-2 text-gray-700">{history.flight}</td>
                                         <td className="px-4 py-2 text-gray-700">

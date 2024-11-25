@@ -5,7 +5,6 @@ import apiConfig from "../configs/apiConfig";
 import { useMutation } from "@tanstack/react-query";
 import { getUserId } from "../utils/getUserId";
 import Submit from "../components/buttons/Submit";
-import { toast } from "sonner";
 
 export default function Booking() {
     const navigate = useNavigate();

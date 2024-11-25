@@ -3,6 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import { format } from "date-fns";
 import apiConfig from "../../configs/apiConfig";
 import { fetchData } from "../../utils/axios";
+import { Link } from "react-router-dom";
 
 export default function FlightTable() {
     const { isLoading: flightsLoading, data: flights } = useQuery({
@@ -42,12 +43,12 @@ export default function FlightTable() {
                                 <td className="border px-4 py-2">${flight.price}</td>
                                 <td className="border px-4 py-2">{flight.availableSeats}</td>
                                 <td className="border px-4 py-2">
-                                    <button
+                                    <Link
+                                        to={`edit/${flight?._id}`}
                                         className="text-blue-500 hover:underline mr-2"
-                                    // onClick={() => onEditFlight(flight)}
                                     >
                                         Edit
-                                    </button>
+                                    </Link>
                                     <button
                                         className="text-red-500 hover:underline"
                                     // onClick={() => onDeleteFlight(flight._id)}

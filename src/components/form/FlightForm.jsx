@@ -5,11 +5,11 @@ import Submit from '../buttons/Submit';
 import Spinner from '../common/Spinner';
 import { RiSendPlaneLine } from 'react-icons/ri';
 import InputWrapper from '../common/InputWrapper';
-import { postData } from '../../utils/axios';
+import { postData, updateData } from '../../utils/axios';
 import apiConfig from '../../configs/apiConfig';
 import { useQueryClient } from '@tanstack/react-query';
 
-export default function FlightForm() {
+export default function FlightForm({ flight }) {
     const queryClient = useQueryClient();
 
     const validationSchema = Yup.object({
@@ -26,18 +26,21 @@ export default function FlightForm() {
     });
 
     const initialValues = {
-        airline: "",
-        origin: "",
-        destination: "",
-        departureDate: "",
-        price: "",
-        availableSeats: "",
-        duration: "",
+        airline: flight?.airline || "",
+        origin: flight?.origin || "",
+        destination: flight?.destination || "",
+        departureDate: flight?.departureDate ? new Date(flight.departureDate).toISOString().slice(0, 16) : "", // Format date
+        price: flight?.price || "",
+        availableSeats: flight?.availableSeats || "",
+        duration: flight?.duration || "",
     };
 
     const onSubmit = async (data) => {
-        // toast.info(JSON.stringify(data))
-        await postData(apiConfig.CREATE_FLIGHT, data)
+        if (flight) {
+            await updateData(apiConfig.UPDATE_FLIGHT + flight?._id, data)
+        } else {
+            await postData(apiConfig.CREATE_FLIGHT, data)
+        }
         queryClient.invalidateQueries(['flights']);
     };
 

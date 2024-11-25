@@ -65,7 +65,7 @@ export default function UserProfile() {
                 {/* User Information */}
                 <div className="mb-8">
                     <h2 className="text-xl font-semibold text-gray-700">Personal Information</h2>
-                    <p className="text-gray-600">Name: {user.name}</p>
+                    <p className="text-gray-600">Name: {user.username}</p>
                     <p className="text-gray-600">Email: {user.email}</p>
                     <p className="text-gray-600">Role: {user.role}</p>
                 </div>

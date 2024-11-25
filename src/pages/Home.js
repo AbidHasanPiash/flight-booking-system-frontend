@@ -1,4 +1,7 @@
 import React from "react";
+import { FaGlobe, FaHeadset, FaLock } from "react-icons/fa";
+import { BsFillPersonCheckFill } from "react-icons/bs";
+import { MdAirplanemodeActive, MdOutlineFlightTakeoff } from "react-icons/md";
 import SearchCard from "../components/card/SearchCard";
 
 export default function Home() {
@@ -45,15 +48,18 @@ export default function Home() {
                         With our platform, you get the most competitive flight deals, unmatched convenience, and a seamless booking experience.
                     </p>
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-8">
-                        <div className="p-4 border rounded-lg shadow-lg">
+                        <div className="p-4 border rounded-lg shadow-lg flex flex-col items-center">
+                            <FaGlobe className="text-blue-600 text-4xl mb-4" />
                             <h4 className="font-bold text-lg">Best Deals</h4>
                             <p>Enjoy exclusive discounts and offers on flights worldwide.</p>
                         </div>
-                        <div className="p-4 border rounded-lg shadow-lg">
+                        <div className="p-4 border rounded-lg shadow-lg flex flex-col items-center">
+                            <FaHeadset className="text-blue-600 text-4xl mb-4" />
                             <h4 className="font-bold text-lg">24/7 Support</h4>
                             <p>Our customer support team is here to assist you anytime.</p>
                         </div>
-                        <div className="p-4 border rounded-lg shadow-lg">
+                        <div className="p-4 border rounded-lg shadow-lg flex flex-col items-center">
+                            <FaLock className="text-blue-600 text-4xl mb-4" />
                             <h4 className="font-bold text-lg">Secure Booking</h4>
                             <p>Your information is protected with advanced encryption technology.</p>
                         </div>
@@ -64,15 +70,18 @@ export default function Home() {
             {/* Statistics Section */}
             <section className="bg-blue-600 text-white py-10">
                 <div className="max-w-6xl mx-auto px-4 grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
-                    <div>
+                    <div className="flex flex-col items-center">
+                        <MdAirplanemodeActive className="text-white text-5xl mb-4" />
                         <h4 className="text-4xl font-bold">500+</h4>
                         <p>Destinations</p>
                     </div>
-                    <div>
+                    <div className="flex flex-col items-center">
+                        <BsFillPersonCheckFill className="text-white text-5xl mb-4" />
                         <h4 className="text-4xl font-bold">1M+</h4>
                         <p>Happy Travelers</p>
                     </div>
-                    <div>
+                    <div className="flex flex-col items-center">
+                        <MdOutlineFlightTakeoff className="text-white text-5xl mb-4" />
                         <h4 className="text-4xl font-bold">24/7</h4>
                         <p>Support Availability</p>
                     </div>
@@ -84,15 +93,30 @@ export default function Home() {
                 <div className="max-w-6xl mx-auto px-4 text-center space-y-6">
                     <h3 className="text-2xl md:text-3xl font-bold">What Our Customers Say</h3>
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                        <div className="p-4 border rounded-lg shadow-lg bg-white">
+                        <div className="p-4 border rounded-lg shadow-lg bg-white flex flex-col items-center">
+                            <img
+                                src="https://via.placeholder.com/100"
+                                alt="Customer John"
+                                className="w-16 h-16 rounded-full mb-4"
+                            />
                             <p className="italic">"Booking flights has never been this easy! Highly recommended."</p>
                             <p className="mt-4 font-bold">- John D.</p>
                         </div>
-                        <div className="p-4 border rounded-lg shadow-lg bg-white">
+                        <div className="p-4 border rounded-lg shadow-lg bg-white flex flex-col items-center">
+                            <img
+                                src="https://via.placeholder.com/100"
+                                alt="Customer Sarah"
+                                className="w-16 h-16 rounded-full mb-4"
+                            />
                             <p className="italic">"Got the best deals and excellent customer service."</p>
                             <p className="mt-4 font-bold">- Sarah K.</p>
                         </div>
-                        <div className="p-4 border rounded-lg shadow-lg bg-white">
+                        <div className="p-4 border rounded-lg shadow-lg bg-white flex flex-col items-center">
+                            <img
+                                src="https://via.placeholder.com/100"
+                                alt="Customer Mark"
+                                className="w-16 h-16 rounded-full mb-4"
+                            />
                             <p className="italic">"Seamless experience from start to finish."</p>
                             <p className="mt-4 font-bold">- Mark L.</p>
                         </div>

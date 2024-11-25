@@ -54,14 +54,14 @@ export default function SearchResults() {
     const onSubmit = async (data) => {
         // Update the URL with the search parameters
         setSearchParams({
-            origin: data.origin,
-            destination: data.destination,
+            origin: data.origin.toUpperCase(),
+            destination: data.destination.toUpperCase(),
             date: data.date,
         });
     };
 
     const onSuccess = () => {
-        formik.resetForm();
+        return
     };
 
     const { formik, mutation } = useFormWithMutation({

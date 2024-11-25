@@ -33,7 +33,7 @@ export default function FlightBookingCard({flight}) {
             </div>
             <div className="h-full flex flex-col items-center justify-center p-2 md:p-4 xl:p-6 space-y-4 bg-blue-200">
                 <p className="text-lg font-bold text-blue-600">${flight.price.toFixed(2)}</p>
-                <Link to={`/flight/${flight?.id}`} className="px-4 py-2 flex items-center space-x-2 bg-yellow-500 text-white rounded-lg hover:bg-yellow-600 transition-colors duration-200">
+                <Link to={`/flight/${flight?._id}`} className="px-4 py-2 flex items-center space-x-2 bg-yellow-500 text-white rounded-lg hover:bg-yellow-600 transition-colors duration-200">
                     <FaTag />
                     <span>Book Now</span>
                 </Link>

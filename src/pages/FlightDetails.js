@@ -1,33 +1,29 @@
+import { useQuery } from "@tanstack/react-query";
 import React, { useState } from "react";
 import { FaPlaneDeparture, FaPlaneArrival, FaClock, FaDollarSign, FaChair } from "react-icons/fa";
 import { MdFlightTakeoff } from "react-icons/md";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import apiConfig from "../configs/apiConfig";
+import { fetchData } from "../utils/axios";
 
-const mockFlightData = {
-    id: 4,
-    airline: "Sample Airlines",
-    origin: "Canada",
-    destination: "New York",
-    departureDate: "2024-11-25T00:00:00.000Z",
-    price: 349.99,
-    availableSeats: 120,
-    duration: "4h 15m",
-};
-
-// Mock seat availability
 const mockSeats = Array(30).fill(false).map((_, i) => ({
     id: i + 1,
     available: Math.random() > 0.2, // Randomly mark some seats as unavailable (80% availability)
 }));
 
 export default function FlightDetails() {
-    const flight = mockFlightData;
-
-    // State to track selected seats
-    const [selectedSeats, setSelectedSeats] = useState([]);
+    const { id } = useParams();
     const navigate = useNavigate();
 
-    // Toggle seat selection
+    // Fetch flight details by ID
+    const { isLoading, error, data: flight } = useQuery({
+        queryKey: ["flight", id],
+        queryFn: () => fetchData(apiConfig.GET_FLIGHT_BY_ID + id), // Ensure the endpoint is correct
+        enabled: !!id, // Only run the query when ID is available
+    });
+
+    const [selectedSeats, setSelectedSeats] = useState([]);
+
     const toggleSeatSelection = (seatId) => {
         if (selectedSeats.includes(seatId)) {
             setSelectedSeats(selectedSeats.filter((id) => id !== seatId)); // Deselect
@@ -39,6 +35,14 @@ export default function FlightDetails() {
     const handleBookNow = () => {
         navigate("/booking", { state: { flight, selectedSeats } });
     };
+
+    if (isLoading) {
+        return <div className="text-center mt-10">Loading flight details...</div>;
+    }
+
+    if (error) {
+        return <div className="text-center mt-10 text-red-600">Failed to fetch flight details.</div>;
+    }
 
     return (
         <div>
@@ -60,7 +64,6 @@ export default function FlightDetails() {
                 <div className="max-w-7xl mx-auto p-6 bg-white shadow-lg rounded-lg -mt-20 relative z-10">
                     <h1 className="text-2xl font-bold text-gray-800 mb-6">Flight Information</h1>
 
-                    {/* Flight Details */}
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                         {/* Origin */}
                         <div className="flex items-center gap-4">
@@ -126,28 +129,7 @@ export default function FlightDetails() {
                         <div className="inline-flex flex-col gap-4 bg-gray-100 p-6 rounded-lg">
                             {Array.from({ length: 6 }, (_, rowIndex) => (
                                 <div key={rowIndex} className="flex gap-4 items-center">
-                                    {/* Left Seats */}
-                                    {mockSeats.slice(rowIndex * 5, rowIndex * 5 + 2).map((seat) => (
-                                        <button
-                                            key={seat.id}
-                                            className={`w-12 h-12 rounded-md text-white flex items-center justify-center ${seat.available
-                                                    ? selectedSeats.includes(seat.id)
-                                                        ? "bg-green-500 hover:bg-green-600"
-                                                        : "bg-gray-300 hover:bg-gray-400"
-                                                    : "bg-red-500 cursor-not-allowed"
-                                                }`}
-                                            disabled={!seat.available}
-                                            onClick={() => toggleSeatSelection(seat.id)}
-                                        >
-                                            {seat.id}
-                                        </button>
-                                    ))}
-
-                                    {/* Aisle Space */}
-                                    <div className="w-12 h-12"></div>
-
-                                    {/* Right Seats */}
-                                    {mockSeats.slice(rowIndex * 5 + 2, rowIndex * 5 + 5).map((seat) => (
+                                    {mockSeats.slice(rowIndex * 5, rowIndex * 5 + 5).map((seat) => (
                                         <button
                                             key={seat.id}
                                             className={`w-12 h-12 rounded-md text-white flex items-center justify-center ${seat.available
@@ -170,7 +152,6 @@ export default function FlightDetails() {
                         </p>
                     </div>
 
-                    {/* Call to Action */}
                     <div className="mt-6 flex justify-end">
                         <button
                             onClick={handleBookNow}

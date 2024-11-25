@@ -1,68 +1,34 @@
 import React from "react";
+import { useQuery } from "@tanstack/react-query";
 import Submit from "../components/buttons/Submit";
 import Spinner from "../components/common/Spinner";
 import InputWrapper from "../components/common/InputWrapper";
 import * as Yup from "yup";
-import { RiSearchLine, RiSortDesc } from "react-icons/ri";
+import { RiSearchLine } from "react-icons/ri";
 import { toast } from "sonner";
 import { useFormWithMutation } from "../utils/useFormWithMutation";
-import { useLocation } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 import flightDateConfig from "../configs/flightDateConfig";
 import FlightBookingCard from "../components/card/FlightBookingCard";
-
-const mockFlights = [
-    {
-        id: 1,
-        airline: "Example Airlines djfhdihfjdf",
-        origin: "Iran",
-        destination: "Los Angeles",
-        departureDate: "2024-11-22T00:00:00.000Z",
-        price: 299.99,
-        availableSeats: 150,
-        duration: "5h 30m"
-    },
-    {
-        id: 2,
-        airline: "Sample Airlines",
-        origin: "Canada",
-        destination: "New York",
-        departureDate: "2024-11-25T00:00:00.000Z",
-        price: 349.99,
-        availableSeats: 120,
-        duration: "4h 15m"
-    },
-    {
-        id: 3,
-        airline: "Sample Airlines",
-        origin: "Canada",
-        destination: "New York",
-        departureDate: "2024-11-25T00:00:00.000Z",
-        price: 349.99,
-        availableSeats: 120,
-        duration: "4h 15m"
-    },
-    {
-        id: 4,
-        airline: "Sample Airlines",
-        origin: "Canada",
-        destination: "New York",
-        departureDate: "2024-11-25T00:00:00.000Z",
-        price: 349.99,
-        availableSeats: 120,
-        duration: "4h 15m"
-    },
-    // Add more flight data here...
-];
+import apiConfig from "../configs/apiConfig";
+import { fetchData } from "../utils/axios";
 
 export default function SearchResults() {
-    const location = useLocation();
-  
-    // Parse the query parameters
-    const queryParams = new URLSearchParams(location.search);
-    const origin = queryParams.get("origin");
-    const destination = queryParams.get("destination");
-    const date = queryParams.get("date");
+    const [searchParams, setSearchParams] = useSearchParams();
 
+    // Extract query parameters
+    const origin = searchParams.get("origin") || "Iran";
+    const destination = searchParams.get("destination") || "Los Angeles";
+    const date = searchParams.get("date") || flightDateConfig?.currentDate;
+
+    // Fetch flights data based on query parameters
+    const { isLoading: flightsLoading, data: flights } = useQuery({
+        queryKey: ["flights", { origin, destination, date }],
+        queryFn: () => fetchData(`${apiConfig?.GET_FLIGHT}?origin=${origin}&destination=${destination}&date=${date}`),
+        enabled: !!origin && !!destination && !!date, // Only fetch if origin and destination are present
+    });
+
+    // Validation schema
     const validationSchema = Yup.object({
         origin: Yup.string()
             .required("Origin is required")
@@ -81,13 +47,18 @@ export default function SearchResults() {
     });
 
     const initialValues = {
-        origin: origin || "Iran",
-        destination: destination || "Los Angeles",
-        date: date || flightDateConfig?.currentDate,
+        origin,
+        destination,
+        date,
     };
 
     const onSubmit = async (data) => {
-        toast.success(JSON.stringify(data));
+        // Update the URL with the search parameters
+        setSearchParams({
+            origin: data.origin,
+            destination: data.destination,
+            date: data.date,
+        });
     };
 
     const onSuccess = () => {
@@ -100,11 +71,12 @@ export default function SearchResults() {
         onSubmit,
         onSuccess,
     });
+
     return (
         <div className="bg-gray-200">
+            {/* Search form */}
             <div className="sticky top-16 z-20 bg-white p-2 rounded-lg shadow-lg">
-                <form onSubmit={formik.handleSubmit} className="max-w-7xl mx-auto" >
-
+                <form onSubmit={formik.handleSubmit} className="max-w-7xl mx-auto">
                     <div className="flex gap-4">
                         <InputWrapper label="Origin" error={formik.errors?.origin} touched={formik.touched?.origin}>
                             <input
@@ -153,37 +125,20 @@ export default function SearchResults() {
                 </form>
             </div>
 
-            <div className="max-w-7xl mx-auto">
-                <div className="m-4 flex items-center justify-end">
-                    <div className="px-2 py-1 bg-white flex items-center space-x-4">
-                        <button className="flex items-center space-x-2"> 
-                            <span>price</span> 
-                            <RiSortDesc/>
-                        </button>
-                        <button className="flex items-center space-x-2"> 
-                            <span>duration</span> 
-                            <RiSortDesc/>
-                        </button>
-                        <button className="flex items-center space-x-2"> 
-                            <span>airline</span> 
-                            <RiSortDesc/>
-                        </button>
-                        <button className="flex items-center space-x-2"> 
-                            <span>available seats</span> 
-                            <RiSortDesc/>
-                        </button>
-                    </div>
-                </div>
-            </div>
-
-            {/* Grid of flights */}
+            {/* Flight results */}
             <div className="max-w-7xl mx-auto">
                 <div className="m-4 grid gap-4">
-                    {mockFlights.map((flight, index) => (
-                        <FlightBookingCard key={index} flight={flight}/>
-                    ))}
+                    {flightsLoading ? (
+                        <div>Loading flights...</div>
+                    ) : flights?.length > 0 ? (
+                        flights.map((flight, index) => (
+                            <FlightBookingCard key={index} flight={flight} />
+                        ))
+                    ) : (
+                        <div>No flights found for your search criteria.</div>
+                    )}
                 </div>
             </div>
         </div>
-    )
+    );
 }

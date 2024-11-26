@@ -6,6 +6,7 @@ import { getUserId } from "../utils/getUserId";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { fetchData, updateData } from "../utils/axios";
 import apiConfig from "../configs/apiConfig";
+import Spinner from "../components/common/Spinner";
 
 export default function UserProfile() {
     const queryClient = useQueryClient();
@@ -28,9 +29,11 @@ export default function UserProfile() {
     const now = new Date();
     // Find the most recent flight with a departure date in the future
     const currentBooking = bookings
-        ?.filter((booking) => new Date(booking?.flightDetails?.departureDate) > now) // Filter for future departures
-        ?.sort((a, b) => new Date(a.flightDetails.departureDate) - new Date(b.flightDetails.departureDate)) // Sort by earliest departure
-        ?.at(0); // Get the earliest upcoming flight
+    ?.filter((booking) => 
+        new Date(booking?.flightDetails?.departureDate) > now && booking.status !== 'cancelled'
+    ) // Filter for future departures and non-cancelled bookings
+    ?.sort((a, b) => new Date(a.flightDetails.departureDate) - new Date(b.flightDetails.departureDate)) // Sort by earliest departure
+    ?.at(0); // Get the earliest upcoming flight
 
 
     // Cancel mutation
@@ -121,7 +124,7 @@ export default function UserProfile() {
                                     disabled={currentBooking?.status === 'cancelled'}
                                     className="px-4 py-2 bg-red-500 text-white font-medium rounded-md shadow-md hover:bg-red-600 focus:ring-2 focus:ring-red-300 transition disabled:bg-gray-300 disabled:cursor-not-allowed"
                                 >
-                                    Cancel Booking
+                                    { cancelMutation.isPending ? <p className="flex items-center space-x-2"><Spinner size="4"/>  <span>Canceling..</span> </p> : 'Cancel Booking'}
                                 </button>
                             </div>
 

@@ -2,11 +2,12 @@ import React from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { postData } from "../utils/axios";
 import apiConfig from "../configs/apiConfig";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { getUserId } from "../utils/getUserId";
 import Submit from "../components/buttons/Submit";
 
 export default function Booking() {
+    const queryClient = useQueryClient();
     const navigate = useNavigate();
     const location = useLocation();
     const { flight, selectedSeats } = location.state || {};
@@ -37,6 +38,8 @@ export default function Booking() {
         mutationFn: () => onSubmit(initialValues),
         onSuccess: (data) => {
             navigate("/profile");
+            // Invalidate flights query to refresh the table
+            queryClient.invalidateQueries(["flightBookings"]);
         },
     });
 

@@ -1,23 +1,16 @@
 import React from 'react'
-import { cn } from '../../libs/utils';
 
-export default function Spinner({ size = '8', color = 'blue-600' }) {
+export default function Spinner({ size, color = 'blue-600' }) {
     // Construct the class names for size
-    const sizeClasses = `w-${size} h-${size}`;
-    
-    // Set fill color dynamically
-    // const fillColor = `fill-${color}`;
+    const sizeClasses =`w-${size} h-${size}`  // Set fixed size
+    const fillColor = `fill-${color}`; // Use dynamic fill class
 
     return (
         <div className='w-full h-full grid place-content-center'>
             <div role="status">
                 <svg 
                     aria-hidden="true" 
-                    className={cn(
-                        sizeClasses, 
-                        'text-gray-200 animate-spin dark:text-gray-600'
-                    )}
-                    style={{ fill: `var(--${color})` }} // Apply fill color dynamically
+                    className={`${sizeClasses} text-gray-200 animate-spin dark:text-gray-600 ${fillColor}`}
                     viewBox="0 0 100 101" 
                     fill="none" 
                     xmlns="http://www.w3.org/2000/svg"

@@ -4,7 +4,6 @@ import Spinner from "../components/common/Spinner";
 import InputWrapper from "../components/common/InputWrapper";
 import * as Yup from "yup";
 import { RiSendPlaneLine } from "react-icons/ri";
-import { toast } from "sonner";
 import { Link } from "react-router-dom";
 import { useFormWithMutation } from "../utils/useFormWithMutation";
 import { postData } from "../utils/axios";
@@ -13,9 +12,9 @@ import apiConfig from "../configs/apiConfig";
 export default function Register() {
 
     const validationSchema = Yup.object({
-        username: Yup.string()
-            .min(3, "Username must be at least 3 characters long")
-            .required("Username is required"),
+        // username: Yup.string()
+        //     .min(3, "Username must be at least 3 characters long")
+        //     .required("Username is required"),
         email: Yup.string()
             .email("Invalid email address")
             .required("Email is required"),
@@ -32,14 +31,13 @@ export default function Register() {
     });
 
     const initialValues = {
-        username: "abid",
-        email: "abid@mail.com",
-        password: "Password@1234",
-        confirmPassword: "Password@1234",
+        // username: "",
+        email: "",
+        password: "",
+        confirmPassword: "",
     };
 
     const onSubmit = async (data) => {
-        toast.success(JSON.stringify(data));
         await postData(apiConfig?.REGISTER, data)
     };
 
@@ -64,7 +62,7 @@ export default function Register() {
                 </p>
                 <form onSubmit={formik.handleSubmit} className="flex flex-col space-y-4" >
 
-                    <InputWrapper label="Username" error={formik.errors?.username} touched={formik.touched?.username}>
+                    {/* <InputWrapper label="Username" error={formik.errors?.username} touched={formik.touched?.username}>
                         <input
                             name="username"
                             placeholder="Username"
@@ -73,7 +71,7 @@ export default function Register() {
                             onBlur={formik.handleBlur}
                             className={`w-full px-2 py-1 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400`}
                         />
-                    </InputWrapper>
+                    </InputWrapper> */}
 
                     <InputWrapper label="Email" error={formik.errors?.email} touched={formik.touched?.email}>
                         <input

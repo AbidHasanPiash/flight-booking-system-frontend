@@ -7,35 +7,48 @@ import { RiSendPlaneLine } from "react-icons/ri";
 import { useFormWithMutation } from "../utils/useFormWithMutation";
 import { updateData } from "../utils/axios";
 import apiConfig from "../configs/apiConfig";
+import { useAuth } from "../context/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 export default function EditProfile() {
+    const navigate = useNavigate();
+    const { user, login } = useAuth();
 
     const validationSchema = Yup.object({
         username: Yup.string().required("User name is required"),
         email: Yup.string()
             .email("Invalid email address")
             .required("Email is required"),
-        password: Yup.string()
-            .min(8, "Password must be at least 8 characters")
-            .matches(/[A-Z]/, "Password must contain at least one uppercase letter")
-            .matches(/[a-z]/, "Password must contain at least one lowercase letter")
-            .matches(/[0-9]/, "Password must contain at least one digit")
-            .matches(/[!@#$%^&*(),.?":{}|<>]/, "Password must contain at least one special character")
-            .required("Password is required"),
+        // password: Yup.string()
+        //     .min(8, "Password must be at least 8 characters")
+        //     .matches(/[A-Z]/, "Password must contain at least one uppercase letter")
+        //     .matches(/[a-z]/, "Password must contain at least one lowercase letter")
+        //     .matches(/[0-9]/, "Password must contain at least one digit")
+        //     .matches(/[!@#$%^&*(),.?":{}|<>]/, "Password must contain at least one special character")
+        //     .required("Password is required"),
     });
 
     const initialValues = {
-        username: "abid",
-        email: "abid@mail.com",
-        password: "Password@1234",
+        username: user?.username || "",
+        email: user?.email || "",
+        // password: "",
     };
 
     const onSubmit = async (data) => {
-        await updateData(apiConfig?.UPDATE_PROFILE, data)
+        const res = await updateData(apiConfig?.UPDATE_PROFILE, data)
+        if (res) {
+            const updatedUserData = {
+                ...user,
+                username: data?.username || user?.username,
+                email: data?.email || user?.email,
+            }
+            login(updatedUserData)
+        }
     };
 
     const onSuccess = () => {
         formik.resetForm();
+        navigate("/profile");
     };
 
     const { formik, mutation } = useFormWithMutation({
@@ -72,7 +85,7 @@ export default function EditProfile() {
                     />
                 </InputWrapper>
 
-                <InputWrapper label="Password" error={formik.errors?.password} touched={formik.touched?.password}>
+                {/* <InputWrapper label="Password" error={formik.errors?.password} touched={formik.touched?.password}>
                     <input
                         name="password"
                         type="password"
@@ -82,7 +95,7 @@ export default function EditProfile() {
                         onBlur={formik.handleBlur}
                         className={`w-full px-2 py-1 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400`}
                     />
-                </InputWrapper>
+                </InputWrapper> */}
 
                 <div className="text-center">
                     <Submit

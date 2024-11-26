@@ -33,9 +33,8 @@ export default function Login() {
 
     const onSubmit = async (data) => {
         const res = await user.login(data)
-        console.log(res);
-        
         login(res);
+
         if (res.role === 'admin') {
             navigate("/admin");
         } else if (res.role === 'user') {

@@ -21,7 +21,7 @@ const UserLayout = ({ children }) => {
                             <Link to={'/'}>{appConfig.Name}</Link>
                         </h1>
                         {user ? (
-                            <Link to="/profile" className="hover:underline">Profile</Link>
+                            <Link to="/profile" className="hover:underline">{user?.username}</Link>
                         ) : (
                             <div className="space-x-4">
                                 <Link to="/login" className="hover:underline">Login</Link>

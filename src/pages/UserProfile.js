@@ -3,11 +3,12 @@ import { Link, useNavigate } from "react-router-dom";
 import { FaPlaneDeparture } from "react-icons/fa";
 import { useAuth } from "../context/AuthContext";
 import { getUserId } from "../utils/getUserId";
-import { useQuery } from "@tanstack/react-query";
-import { fetchData } from "../utils/axios";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { fetchData, updateData } from "../utils/axios";
 import apiConfig from "../configs/apiConfig";
 
 export default function UserProfile() {
+    const queryClient = useQueryClient();
     const navigate = useNavigate();
     const { user, logout } = useAuth();
     const userIdFromToken = getUserId();
@@ -24,11 +25,32 @@ export default function UserProfile() {
         navigate("/login");
     };
 
+    const currentBooking = bookings?.[bookings.length - 1]; // Display the latest booking
+    
+
+    // Cancel mutation
+    const cancelMutation = useMutation({
+        mutationFn: (id) => updateData(apiConfig?.UPDATE_BOOKING + id, {status: 'cancelled'}), // API endpoint for deletion
+        onSuccess: () => {
+            // Invalidate flights query to refresh the table
+            queryClient.invalidateQueries(["flightBookings"]);
+        },
+        onError: (error) => {
+            console.error("Failed to delete flight:", error);
+        },
+    });
+
+    // Delete flight handler
+    const onCancelBooking = (id) => {
+        if (window.confirm("Are you sure you want to Cancel this booking?")) {
+            cancelMutation.mutate(id);
+        }
+    };
+    
+
     if (isLoading) {
         return <div className="text-center mt-10">Loading...</div>;
     }
-
-    const currentBooking = bookings?.[bookings.length - 1]; // Display the latest booking
 
     return (
         <div className="min-h-screen bg-gray-50 py-12">
@@ -62,12 +84,20 @@ export default function UserProfile() {
                     <h2 className="text-xl font-semibold text-gray-700">Current Booking</h2>
                     {currentBooking ? (
                         <div className="bg-blue-50 p-4 rounded-lg border border-blue-200">
-                            <div className="flex items-center gap-4 mb-4">
-                                <FaPlaneDeparture className="text-blue-600 text-2xl" />
-                                <div>
-                                    <p className="text-gray-700 font-medium">Flight: {currentBooking.flightId}</p>
-                                    <p className="text-gray-600">Seats: {currentBooking.numberOfSeats}</p>
+                            <div className="flex items-start justify-between">
+                                <div className="flex items-center gap-4 mb-4">
+                                    <FaPlaneDeparture className="text-blue-600 text-2xl" />
+                                    <div>
+                                        <p className="text-gray-700 font-medium">Flight: {currentBooking.flightId}</p>
+                                        <p className="text-gray-600">Seats: {currentBooking.numberOfSeats}</p>
+                                    </div>
                                 </div>
+                                <button
+                                    onClick={() => onCancelBooking(currentBooking?._id)}
+                                    disabled={currentBooking?.status === 'cancelled'}
+                                    className="text-red-500 hover:bg-red-100 px-2 py-1 rounded-lg disabled:cursor-not-allowed">
+                                    Cancel
+                                </button>
                             </div>
                             <p className="text-gray-600">
                                 <strong>Date:</strong> {new Date(currentBooking.bookingDate).toLocaleDateString()}
@@ -102,6 +132,9 @@ export default function UserProfile() {
                                             Date
                                         </th>
                                         <th className="px-4 py-2 text-left text-gray-700 font-medium whitespace-nowrap">
+                                            Status
+                                        </th>
+                                        <th className="px-4 py-2 text-left text-gray-700 font-medium whitespace-nowrap">
                                             Total Price
                                         </th>
                                     </tr>
@@ -113,6 +146,9 @@ export default function UserProfile() {
                                             <td className="px-4 py-2 text-gray-700 whitespace-nowrap">{history.numberOfSeats}</td>
                                             <td className="px-4 py-2 text-gray-700 whitespace-nowrap">
                                                 {new Date(history.bookingDate).toLocaleDateString()}
+                                            </td>
+                                            <td className="px-4 py-2 text-gray-700 whitespace-nowrap capitalize">
+                                                <span className={history.status === 'confirmed' ? 'text-green-600' : 'text-red-600'}>{history.status}</span>
                                             </td>
                                             <td className="px-4 py-2 text-gray-700 whitespace-nowrap">
                                                 ${history.totalPrice.toFixed(2)}

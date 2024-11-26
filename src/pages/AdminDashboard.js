@@ -15,7 +15,7 @@ export default function AdminDashboard() {
             </nav>
 
             {/* Nested Routes Render Here */}
-            <div className="bg-white shadow-lg rounded-lg p-6">
+            <div className="">
                 <Outlet />
             </div>
         </div>

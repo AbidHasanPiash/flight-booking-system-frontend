@@ -26,9 +26,9 @@ export default function SearchCard() {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 rounded-lg w-full bg-white text-gray-950 p-4 shadow-lg">
             {/* From Section */}
             <div>
-                <div className="flex items-center justify-between mb-2">
-                    <p className="text-sm font-medium text-gray-600">Origin</p>
+                <div className="flex items-center space-x-2 mb-2">
                     <FaPlaneDeparture className="text-blue-500" />
+                    <p className="text-sm font-medium text-gray-600">Origin</p>
                 </div>
                 <input
                     type="text"
@@ -41,9 +41,9 @@ export default function SearchCard() {
 
             {/* To Section */}
             <div>
-                <div className="flex items-center justify-between mb-2">
-                    <p className="text-sm font-medium text-gray-600">Destination</p>
+                <div className="flex items-center space-x-2 mb-2">
                     <FaPlaneArrival className="text-blue-500" />
+                    <p className="text-sm font-medium text-gray-600">Destination</p>
                 </div>
                 <input
                     type="text"
@@ -56,9 +56,9 @@ export default function SearchCard() {
 
             {/* Travel Date Section */}
             <div>
-                <div className="flex items-center justify-between mb-2">
-                    <p className="text-sm font-medium text-gray-600">Travel Date</p>
+                <div className="flex items-center space-x-2 mb-2">
                     <FaRegCalendarAlt className="text-blue-500" />
+                    <p className="text-sm font-medium text-gray-600">Travel Date</p>
                 </div>
                 <input
                     type="date"

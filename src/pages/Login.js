@@ -27,8 +27,8 @@ export default function Login() {
     });
 
     const initialValues = {
-        email: "abid@mail.com",
-        password: "Password@1234",
+        email: "",          //abid@mail.com
+        password: "",       //Password@1234
     };
 
     const onSubmit = async (data) => {

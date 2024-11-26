@@ -38,6 +38,7 @@ export default function FlightTable() {
             <table className="w-full border border-collapse">
                 <thead>
                     <tr className="bg-blue-500 text-white">
+                        <th className="border px-4 py-2">Flight No.</th>
                         <th className="border px-4 py-2">Airline</th>
                         <th className="border px-4 py-2">Departure</th>
                         <th className="border px-4 py-2">Arrival</th>
@@ -57,6 +58,7 @@ export default function FlightTable() {
                     ) : flights?.length > 0 ? (
                         flights.map((flight) => (
                             <tr key={flight._id} className="bg-white hover:bg-gray-50">
+                                <td className="border px-4 py-2">{flight.flightNumber}</td>
                                 <td className="border px-4 py-2">{flight.airline}</td>
                                 <td className="border px-4 py-2">{flight.origin}</td>
                                 <td className="border px-4 py-2">{flight.destination}</td>

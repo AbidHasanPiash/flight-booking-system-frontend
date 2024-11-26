@@ -1,70 +1,113 @@
-# Getting Started with Create React App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Flight Booking System - Backend
 
-## Available Scripts
+The backend of the **Flight Booking System** is built with Node.js, Express.js, and MongoDB to provide a RESTful API for user authentication, flight search, and booking management.
 
-In the project directory, you can run:
+## Features
 
-### `npm start`
+- **User Authentication**: JWT-based authentication with role-based access control (User/Admin).
+- **Flight Management**: Admins can add, update, and delete flights.
+- **Booking System**: Users can search for flights and make bookings.
+- **Secure Backend**: Includes input validation, bcrypt password hashing, and CORS configuration.
+- **Environment-Specific Configurations**: Supports `.env` files for managing sensitive data.
+- **Email Notifications**: Sends booking confirmations using SMTP.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## Prerequisites
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+Ensure you have the following installed:
 
-### `npm test`
+- [Node.js (v20 or later)](https://nodejs.org/)
+- [npm](https://www.npmjs.com/)
+- [MongoDB](https://www.mongodb.com/)
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Installation
 
-### `npm run build`
+Follow these steps to set up and run the backend:
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+1. **Clone the Repository**:
+   ```bash
+   git clone https://github.com/your-repo/flight-booking-system-backend.git
+   cd flight-booking-system-backend
+   ```
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+2. **Install Dependencies**:
+   ```bash
+   npm install
+   ```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+3. **Environment Configuration**:
+   Create a `.env` file in the root directory and configure it using the template provided in `.env.example`.
 
-### `npm run eject`
+   Example `.env.development` file:
+   ```env
+   ####################################################
+   # APPLICATION ENVIRONMENT
+   ####################################################
+   NODE_ENV=development
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+   ####################################################
+   # SERVER CONFIGURATION
+   ####################################################
+   REACT_APP_BASE_URL=http://localhost:5000
+   REACT_APP_PREFIX=api
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+   ####################################################
+   # DATABASE CONFIGURATION
+   ####################################################
+   MONGODB_URL=mongodb+srv://<your-username>:<your-password>@cluster0.mongodb.net/flight-booking-system
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+   ####################################################
+   # JWT CONFIGURATION
+   ####################################################
+   JWT_SECRET=your_jwt_secret
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+   ####################################################
+   # EMAIL SERVICE CONFIGURATION
+   ####################################################
+   SMTP_HOST=smtp.gmail.com
+   SMTP_PORT=587
+   SMTP_USERNAME=your_email@example.com
+   SMTP_PASSWORD=your_email_password
+   EMAIL_FROM=your_email@example.com
+   ```
 
-## Learn More
+4. **Start the Server**:
+   - Development Mode:
+     ```bash
+     npm run dev
+     ```
+   - Production Mode:
+     ```bash
+     npm start
+     ```
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+5. **API Endpoints**:
+   The backend server runs on `http://localhost:5000` by default. Use tools like [Postman](https://www.postman.com/) to test the following endpoints:
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+   - `POST /api/register` - Register a new user.
+   - `POST /api/login` - Authenticate and retrieve a JWT.
+   - `GET /api/flights` - Retrieve a list of flights.
+   - Additional routes for bookings and admin operations are documented in the API specification.
 
-### Code Splitting
+## Deployment
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+- **Backend**:
+  Deploy to a platform like [Render](https://render.com/), [Heroku](https://heroku.com/), or [Vercel](https://vercel.com/).
 
-### Analyzing the Bundle Size
+- **Environment Variables**:
+  Set the environment variables from `.env` on the respective deployment platform.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+## Author
 
-### Making a Progressive Web App
+- **Name**: [ABID HASAN](https://abidhasan.vercel.app/)
+- **Email**: [mp.abidhasan@gmail.com](mailto:mp.abidhasan@gmail.com)
+- **Mobile**: [+8801789507895](tel:+8801789507895)
+- **LinkedIn**: [linkedin.com/in/abidhasanpiash](https://www.linkedin.com/in/abidhasanpiash/)
+- **GitHub**: [github.com/AbidHasanPiash](https://github.com/AbidHasanPiash)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+---
 
-### Advanced Configuration
+## Additional Notes
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+- For advanced features like flight filtering, booking cancellation, and pagination, refer to the detailed [Project Instructions](#).
+- The `.env.example` file serves as a reference for required environment variables. Ensure to replace placeholders with actual values.

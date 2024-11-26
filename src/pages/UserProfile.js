@@ -123,13 +123,25 @@ export default function UserProfile() {
                                 <thead className="bg-gray-100">
                                     <tr>
                                         <th className="px-4 py-2 text-left text-gray-700 font-medium whitespace-nowrap">
-                                            Flight ID
+                                            Flight No.
+                                        </th>
+                                        <th className="px-4 py-2 text-left text-gray-700 font-medium whitespace-nowrap">
+                                            Airline
+                                        </th>
+                                        <th className="px-4 py-2 text-left text-gray-700 font-medium whitespace-nowrap">
+                                            Origin
+                                        </th>
+                                        <th className="px-4 py-2 text-left text-gray-700 font-medium whitespace-nowrap">
+                                            Destination
                                         </th>
                                         <th className="px-4 py-2 text-left text-gray-700 font-medium whitespace-nowrap">
                                             Seats
                                         </th>
                                         <th className="px-4 py-2 text-left text-gray-700 font-medium whitespace-nowrap">
-                                            Date
+                                            Departure Date
+                                        </th>
+                                        <th className="px-4 py-2 text-left text-gray-700 font-medium whitespace-nowrap">
+                                            Booking Date
                                         </th>
                                         <th className="px-4 py-2 text-left text-gray-700 font-medium whitespace-nowrap">
                                             Status
@@ -142,8 +154,14 @@ export default function UserProfile() {
                                 <tbody>
                                     {bookings.map((history) => (
                                         <tr key={history._id} className="border-t">
-                                            <td className="px-4 py-2 text-gray-700 whitespace-nowrap">{history.flightId}</td>
+                                            <td className="px-4 py-2 text-gray-700 whitespace-nowrap">{history?.flightDetails?.flightNumber}</td>
+                                            <td className="px-4 py-2 text-gray-700 whitespace-nowrap">{history?.flightDetails?.airline}</td>
+                                            <td className="px-4 py-2 text-gray-700 whitespace-nowrap">{history?.flightDetails?.origin}</td>
+                                            <td className="px-4 py-2 text-gray-700 whitespace-nowrap">{history?.flightDetails?.destination}</td>
                                             <td className="px-4 py-2 text-gray-700 whitespace-nowrap">{history.numberOfSeats}</td>
+                                            <td className="px-4 py-2 text-gray-700 whitespace-nowrap">
+                                                {new Date(history?.flightDetails?.departureDate).toLocaleDateString()}
+                                            </td>
                                             <td className="px-4 py-2 text-gray-700 whitespace-nowrap">
                                                 {new Date(history.bookingDate).toLocaleDateString()}
                                             </td>

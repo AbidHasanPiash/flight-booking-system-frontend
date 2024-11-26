@@ -30,7 +30,7 @@ Follow these steps to set up and run the backend:
 
 1. **Clone the Repository**:
    ```bash
-   git clone https://github.com/your-repo/flight-booking-system-backend.git
+   git clone https://github.com/AbidHasanPiash/flight-booking-system-frontend.git
    cd flight-booking-system-backend
    ```
 
@@ -44,35 +44,20 @@ Follow these steps to set up and run the backend:
 
    Example `.env.development` file:
    ```env
-   ####################################################
-   # APPLICATION ENVIRONMENT
-   ####################################################
-   NODE_ENV=development
+    ####################################################
+    # APPLICATION ENVIRONMENT
+    # Purpose: Defines the operating mode of the application (development, test, production).
+    # Use: Toggle features or behaviors based on the application environment.
+    ####################################################
+    NODE_ENV=development
 
-   ####################################################
-   # SERVER CONFIGURATION
-   ####################################################
-   REACT_APP_BASE_URL=http://localhost:5000
-   REACT_APP_PREFIX=api
-
-   ####################################################
-   # DATABASE CONFIGURATION
-   ####################################################
-   MONGODB_URL=mongodb+srv://<your-username>:<your-password>@cluster0.mongodb.net/flight-booking-system
-
-   ####################################################
-   # JWT CONFIGURATION
-   ####################################################
-   JWT_SECRET=your_jwt_secret
-
-   ####################################################
-   # EMAIL SERVICE CONFIGURATION
-   ####################################################
-   SMTP_HOST=smtp.gmail.com
-   SMTP_PORT=587
-   SMTP_USERNAME=your_email@example.com
-   SMTP_PASSWORD=your_email_password
-   EMAIL_FROM=your_email@example.com
+    ####################################################
+    # SERVER CONFIGURATION
+    # Purpose: Contains settings pertinent to the application server, such as port and API version.
+    # Use: Facilitate running the server with environment-specific configurations.
+    ####################################################
+    REACT_APP_BASE_URL=http://localhost:5000
+    REACT_APP_PREFIX=api
    ```
 
 4. **Start the Server**:
@@ -84,14 +69,6 @@ Follow these steps to set up and run the backend:
      ```bash
      npm start
      ```
-
-5. **API Endpoints**:
-   The backend server runs on `http://localhost:5000` by default. Use tools like [Postman](https://www.postman.com/) to test the following endpoints:
-
-   - `POST /api/register` - Register a new user.
-   - `POST /api/login` - Authenticate and retrieve a JWT.
-   - `GET /api/flights` - Retrieve a list of flights.
-   - Additional routes for bookings and admin operations are documented in the API specification.
 
 ## Deployment
 

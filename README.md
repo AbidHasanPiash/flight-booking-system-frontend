@@ -82,8 +82,3 @@ Follow these steps to set up and run the backend:
 - **GitHub**: [github.com/AbidHasanPiash](https://github.com/AbidHasanPiash)
 
 ---
-
-## Additional Notes
-
-- For advanced features like flight filtering, booking cancellation, and pagination, refer to the detailed [Project Instructions](#).
-- The `.env.example` file serves as a reference for required environment variables. Ensure to replace placeholders with actual values.

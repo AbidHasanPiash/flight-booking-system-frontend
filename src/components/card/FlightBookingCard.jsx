@@ -19,7 +19,16 @@ export default function FlightBookingCard({flight}) {
                     </div>
                     <div className="flex items-center space-x-2 mt-2 text-gray-600">
                         <FaRegCalendarAlt className="text-blue-500" />
-                        <span>{new Date(flight.departureDate).toLocaleDateString()}</span>
+                        <span>
+                            {new Date(flight?.departureDate).toLocaleString("en-US", {
+                                year: "numeric",
+                                month: "long",
+                                day: "numeric",
+                                hour: "2-digit",
+                                minute: "2-digit",
+                                hour12: true,
+                            })}
+                        </span>
                     </div>
                     <div className="flex items-center space-x-2 mt-2 text-gray-600">
                         <FaClock className="text-blue-500" />

@@ -63,17 +63,12 @@ Follow these steps to set up and run the backend:
 4. **Start the Server**:
    - Development Mode:
      ```bash
-     npm run dev
+     npm run start
      ```
    - Production Mode:
      ```bash
      npm start
      ```
-
-## Deployment
-
-- **Backend**:
-  Deploy to a platform like [Render](https://render.com/), [Heroku](https://heroku.com/), or [Vercel](https://vercel.com/).
 
 - **Environment Variables**:
   Set the environment variables from `.env` on the respective deployment platform.

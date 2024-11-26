@@ -25,7 +25,12 @@ export default function UserProfile() {
         navigate("/login");
     };
 
-    const currentBooking = bookings?.[bookings.length - 1]; // Display the latest booking
+    const now = new Date();
+    // Find the most recent flight with a departure date in the future
+    const currentBooking = bookings
+        ?.filter((booking) => new Date(booking?.flightDetails?.departureDate) > now) // Filter for future departures
+        ?.sort((a, b) => new Date(a.flightDetails.departureDate) - new Date(b.flightDetails.departureDate)) // Sort by earliest departure
+        ?.at(0); // Get the earliest upcoming flight
 
 
     // Cancel mutation
@@ -159,8 +164,8 @@ export default function UserProfile() {
                                     <strong className="text-gray-800">Status:</strong>
                                     <span
                                         className={`px-3 py-1 rounded-full ${currentBooking.status === 'confirmed'
-                                                ? 'bg-green-100 text-green-700'
-                                                : 'bg-red-100 text-red-700'
+                                            ? 'bg-green-100 text-green-700'
+                                            : 'bg-red-100 text-red-700'
                                             }`}
                                     >
                                         {currentBooking.status}

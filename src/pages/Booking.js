@@ -12,6 +12,12 @@ export default function Booking() {
     const { flight, selectedSeats } = location.state || {};
     const userIFromToken = getUserId();
 
+    const currentDateTime = new Date();
+    const departureDateTime = new Date(flight?.departureDate);
+
+    // Check if the flight has already departed
+    const isFlightDeparted = departureDateTime <= currentDateTime;
+
     const initialValues = {
         userId: userIFromToken,
         flightId: flight?._id,
@@ -23,7 +29,7 @@ export default function Booking() {
 
     const onSubmit = async (data) => {
         const res = await postData(apiConfig.CREATE_BOOKING, data);
-        return res
+        return res;
     };
 
     const mutation = useMutation({
@@ -59,15 +65,24 @@ export default function Booking() {
                     </p>
                 </div>
 
-                {/* Confirm Booking Button */}
-                <div className="mt-6">
-                    <Submit
-                        onClick={() => mutation.mutate()}
-                        disabled={mutation.isPending}
-                        label={mutation.isPending ? "Submitting..." : "Confirm"}
-                        className="w-full"
-                    />
-                </div>
+                {/* Booking Restriction */}
+                {isFlightDeparted ? (
+                    <div className="mt-6 bg-red-100 text-red-600 p-4 rounded">
+                        <p className="text-center font-semibold">
+                            This flight has already departed. Booking is not allowed.
+                        </p>
+                    </div>
+                ) : (
+                    /* Confirm Booking Button */
+                    <div className="mt-6">
+                        <Submit
+                            onClick={() => mutation.mutate()}
+                            disabled={mutation.isPending}
+                            label={mutation.isPending ? "Submitting..." : "Confirm"}
+                            className="w-full"
+                        />
+                    </div>
+                )}
             </div>
         </div>
     );

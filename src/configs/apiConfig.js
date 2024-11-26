@@ -1,11 +1,10 @@
-const URL = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost'
-const PORT = process.env.NEXT_PUBLIC_PORT || '5000'
-const PREFIX = process.env.NEXT_PUBLIC_PREFIX || 'api'
+const URL = process.env.REACT_APP_BASE_URL;
+const PREFIX = process.env.REACT_APP_PREFIX;
 
 // const isServer = typeof window === 'undefined';
 
 const apiConfig = {
-    BASE_URL : `${URL}:${PORT}/${PREFIX}`,
+    BASE_URL : `${URL}/${PREFIX}`,
 
     //────────────────────────────────────────────
     //? API: ---- Auth

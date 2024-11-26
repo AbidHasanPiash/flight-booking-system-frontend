@@ -1,24 +1,28 @@
+# Flight Booking System Frontend
 
-# Flight Booking System - Backend
+This project is the frontend of the **Flight Booking System**, a MERN stack web application that allows users to search for flights, view available options, and make bookings. This React application connects to the backend API for data retrieval and user authentication.
 
-The backend of the **Flight Booking System** is built with Node.js, Express.js, and MongoDB to provide a RESTful API for user authentication, flight search, and booking management.
+---
 
 ## Features
 
-- **User Authentication**: JWT-based authentication with role-based access control (User/Admin).
-- **Flight Management**: Admins can add, update, and delete flights.
-- **Booking System**: Users can search for flights and make bookings.
-- **Secure Backend**: Includes input validation, bcrypt password hashing, and CORS configuration.
-- **Environment-Specific Configurations**: Supports `.env` files for managing sensitive data.
-- **Email Notifications**: Sends booking confirmations using SMTP.
+- **Responsive Design**: Optimized for desktop and mobile views.
+- **User Authentication**: Login, registration, and protected routes.
+- **Flight Search**: Search flights by origin, destination, and date.
+- **Booking Management**: Allows users to view and manage bookings.
+- **Admin Dashboard**: For administrators to manage flights and bookings.
+
+---
 
 ## Prerequisites
 
-Ensure you have the following installed:
+Before running this project, make sure you have the following installed on your system:
 
-- [Node.js (v20 or later)](https://nodejs.org/)
-- [npm](https://www.npmjs.com/)
-- [MongoDB](https://www.mongodb.com/)
+- Node.js (version 20.x or later)
+- npm (Node Package Manager)
+- A backend API for the Flight Booking System (see the backend repository for details)
+
+---
 
 ## Installation
 
